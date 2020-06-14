@@ -1,0 +1,12 @@
+{
+  "name": "idempotent-release-fp",
+  "version": "0.0.1",
+  "type:": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "devDependencies": {
+    "rollup": "^2.16.0"
+  }
+}

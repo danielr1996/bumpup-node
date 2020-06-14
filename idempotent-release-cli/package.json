@@ -1,0 +1,44 @@
+{
+  "name": "idempotent-release-cli",
+  "version": "0.0.1",
+  "description": "idempotent, configurable and language-agnostic software versioning",
+  "keywords": [
+    "idempotent",
+    "configurable",
+    "language-agnostic",
+    "automatic",
+    "versioning",
+    "semver"
+  ],
+  "homepage": "https://github.com/danielr1996/idempotent-release#readme",
+  "bugs": {
+    "url": "https://github.com/danielr1996/idempotent-release/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielr1996/idempotent-release.git"
+  },
+  "license": "ISC",
+  "author": "Daniel Richter",
+  "type": "module",
+  "bin": {
+    "id-release": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "rollup -c && npm install -g"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^4.1.2",
+    "@types/node": "^14.0.13",
+    "idempotent-release-fp": "file:../idempotent-release-fp",
+    "idempotent-release-lib": "file:../idempotent-release-lib",
+    "idempotent-release-read-file": "file:../idempotent-release-read-file",
+    "idempotent-release-read-package-json": "file:../idempotent-release-read-package-json",
+    "rollup": "^2.16.0",
+    "rollup-plugin-add-shebang": "^0.3.1",
+    "rollup-plugin-delete": "^2.0.0",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.5"
+  }
+}

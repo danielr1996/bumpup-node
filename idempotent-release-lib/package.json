@@ -1,0 +1,47 @@
+{
+  "name": "idempotent-release-lib",
+  "version": "0.0.1",
+  "description": "idempotent, configurable and language-agnostic software versioning",
+  "keywords": [
+    "idempotent",
+    "configurable",
+    "language-agnostic",
+    "automatic",
+    "versioning",
+    "semver"
+  ],
+  "homepage": "https://github.com/danielr1996/idempotent-release#readme",
+  "bugs": {
+    "url": "https://github.com/danielr1996/idempotent-release/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielr1996/idempotent-release.git"
+  },
+  "license": "ISC",
+  "author": "Daniel Richter",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^4.1.2",
+    "ava": "^3.8.2",
+    "chai": "^4.2.0",
+    "esm": "^3.2.25",
+    "idempotent-release-fp": "file:../idempotent-release-fp",
+    "npm": "^6.14.5",
+    "rollup": "^2.16.0",
+    "rollup-plugin-delete": "^2.0.0",
+    "tape": "^5.0.1",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "@types/jest": "^26.0.0",
+    "babel-tape-runner": "^3.0.0",
+    "jest": "^26.0.1",
+    "ts-jest": "^26.1.0"
+  }
+}

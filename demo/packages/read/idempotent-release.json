@@ -1,0 +1,7 @@
+{
+  "read": [
+    {
+      "reader": "idempotent-release-read-package-json"
+    }
+  ]
+}

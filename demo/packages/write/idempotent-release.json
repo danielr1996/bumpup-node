@@ -1,0 +1,10 @@
+{
+  "read": [
+    {
+      "reader": "idempotent-release-read-file",
+      "options": {
+        "file": "version.txt"
+      }
+    }
+  ]
+}

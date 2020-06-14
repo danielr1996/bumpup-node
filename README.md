@@ -9,3 +9,7 @@ Key Concepts:
 - configurable and language-agnostic: works with any language and workflow
 - does only on thing, no integrated commiting or publishing
 
+## Components
+`idempotent-release` is structured as a monorepo and consists of the following subpackages:
+- idempotent-release-cli
+
