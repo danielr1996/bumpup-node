@@ -3,5 +3,10 @@
     {
       "reader": "idempotent-release-read-package-json"
     }
+  ],
+  "type": [
+    {
+      "reader": "idempotent-release-change-type-git"
+    }
   ]
 }

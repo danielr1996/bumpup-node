@@ -1,9 +1,18 @@
-import {lift, debug} from "idempotent-release-fp";
-import {flow} from "idempotent-release-fp";
+// @ts-ignore
+import {log, flow} from "idempotent-release-fp/dist/index.cjs";
 
-export const configure = (getLastVersion, getChangeType, getNewVersion, bump) => {
-    const getNewVersionFromChangeTypeAndLastVersion = lift(getNewVersion)(flow(getChangeType))(flow(getLastVersion));
-    return flow(getNewVersionFromChangeTypeAndLastVersion, bump);
+export type VersionReader = () => string;
+export type TypeReader = (string) => string;
+export type VersionDeterminer = (string) => (string) => string;
+export type VersionBumper = (string) => void;
+export type Releaser = () => void;
+
+export const release = (vReader: VersionReader) => (tReader: TypeReader) => (determiner: VersionDeterminer) => (bumper: VersionBumper): Releaser => {
+    return ()=>{
+        const lastVersion = vReader();
+        const type = tReader(lastVersion);
+        const newVersion = determiner(type)(lastVersion);
+        bumper(newVersion);
+    };
 }
-
 

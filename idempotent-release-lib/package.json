@@ -20,8 +20,7 @@
   },
   "license": "ISC",
   "author": "Daniel Richter",
-  "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/index.mjs",
   "scripts": {
     "build": "rollup -c"
   },
@@ -31,6 +30,7 @@
     "chai": "^4.2.0",
     "esm": "^3.2.25",
     "idempotent-release-fp": "file:../idempotent-release-fp",
+    "jest-chain": "^1.1.5",
     "npm": "^6.14.5",
     "rollup": "^2.16.0",
     "rollup-plugin-delete": "^2.0.0",

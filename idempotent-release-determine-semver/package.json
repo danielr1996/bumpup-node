@@ -1,5 +1,5 @@
 {
-  "name": "idempotent-release-change-type-git",
+  "name": "idempotent-release-determine-semver",
   "version": "0.0.1",
   "main": "dist/index.js",
   "type": "module",
@@ -10,8 +10,6 @@
     "@rollup/plugin-typescript": "^4.1.2",
     "@types/jest": "^26.0.0",
     "@types/node": "^14.0.13",
-    "conventional-commits-parser": "^3.1.0",
-    "gitlog": "^4.0.0",
     "idempotent-release-fp": "file:../idempotent-release-fp",
     "jest": "^26.0.1",
     "jest-chain": "^1.1.5",
@@ -22,6 +20,6 @@
     "typescript": "^3.9.5"
   },
   "dependencies": {
-    "z": "^1.0.9"
+    "semver": "^7.3.2"
   }
 }

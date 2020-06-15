@@ -6,5 +6,15 @@
         "file": "version.txt"
       }
     }
+  ],
+  "type": [
+    {
+      "reader": "idempotent-release-change-type-git"
+    }
+  ],
+  "determine": [
+    {
+      "determiner": "idempotent-release-determine-semver"
+    }
   ]
 }

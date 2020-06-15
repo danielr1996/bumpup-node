@@ -20,14 +20,12 @@
   },
   "license": "ISC",
   "author": "Daniel Richter",
-  "type": "module",
   "bin": {
-    "id-release": "./dist/index.js"
+    "id-release": "./dist/index.cjs"
   },
   "scripts": {
-    "build": "rollup -c && npm install -g"
+    "build": "rollup -c"
   },
-  "dependencies": {},
   "devDependencies": {
     "@rollup/plugin-typescript": "^4.1.2",
     "@types/node": "^14.0.13",
@@ -40,5 +38,10 @@
     "rollup-plugin-delete": "^2.0.0",
     "tslib": "^2.0.0",
     "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "idempotent-release-change-determine-semver": "file:../idempotent-release-determine-semver",
+    "idempotent-release-change-type-git": "file:../idempotent-release-change-type-git",
+    "idempotent-release-determine-semver": "file:../idempotent-release-determine-semver"
   }
 }
