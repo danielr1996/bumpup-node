@@ -1,4 +1,4 @@
-import {determine} from "./index";
+import {determine} from "src/index";
 
 describe('idempotent-release-determine-semver', ()=>{
     describe('determine', ()=>{

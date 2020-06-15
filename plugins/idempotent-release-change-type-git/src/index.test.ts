@@ -1,4 +1,4 @@
-import {CommitMessage, CommitType, determineHighestCommitType, filterToLastVersion, getCommitType} from "./index";
+import {CommitMessage, CommitType, determineHighestCommitType, filterToLastVersion, getCommitType} from "src/index";
 
 describe('idempotent-release-change-type-git', () => {
     describe('getCommitType', () => {

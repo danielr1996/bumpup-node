@@ -1,0 +1,48 @@
+{
+  "name": "@bumpup/cli",
+  "version": "0.0.1",
+  "description": "configurable and language-agnostic software versioning",
+  "keywords": [
+    "configurable",
+    "language-agnostic",
+    "automatic",
+    "versioning",
+    "semver",
+    "bump",
+    "bumpup"
+  ],
+  "homepage": "https://github.com/danielr1996/bumpup#readme",
+  "bugs": "https://github.com/danielr1996/bumpup/issues",
+  "license": "ISC",
+  "author": "Daniel Richter (https://github.com/danielr1996)",
+  "files": ["dist"],
+  "bin": {
+    "bumpup": "./dist/index.cjs"
+  },
+  "man": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielr1996/bumpup.git",
+    "directory": "core/cli"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^4.1.2",
+    "@types/node": "^14.0.13",
+    "idempotent-release-fp": "file:../idempotent-release-fp",
+    "idempotent-release-lib": "file:../idempotent-release-lib",
+    "idempotent-release-read-file": "file:../idempotent-release-read-file",
+    "idempotent-release-read-package-json": "file:../idempotent-release-read-package-json",
+    "idempotent-release-bump-file": "file:../idempotent-release-bump-file",
+    "idempotent-release-change-determine-semver": "file:../idempotent-release-determine-semver",
+    "idempotent-release-change-type-git": "file:../idempotent-release-change-type-git",
+    "idempotent-release-determine-semver": "file:../idempotent-release-determine-semver",
+    "rollup": "^2.16.0",
+    "rollup-plugin-add-shebang": "^0.3.1",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.5"
+  }
+}

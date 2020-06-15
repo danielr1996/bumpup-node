@@ -1,0 +1,40 @@
+{
+  "name": "@bumpup/fp",
+  "version": "0.0.1",
+  "description": "configurable and language-agnostic software versioning",
+  "keywords": [
+    "configurable",
+    "language-agnostic",
+    "automatic",
+    "versioning",
+    "semver",
+    "bump",
+    "bumpup"
+  ],
+  "homepage": "https://github.com/danielr1996/bumpup#readme",
+  "bugs": "https://github.com/danielr1996/bumpup/issues",
+  "license": "ISC",
+  "author": "Daniel Richter (https://github.com/danielr1996)",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.cjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielr1996/bumpup.git",
+    "directory": "core/fp"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "rollup": "^2.16.0",
+    "@rollup/plugin-typescript": "^4.1.2",
+    "@types/jest": "^26.0.0",
+    "jest": "^26.0.1",
+    "ts-jest": "^26.1.0",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.5"
+  }
+}

@@ -1,4 +1,4 @@
-import {release, TypeReader, VersionBumper, VersionDeterminer, VersionReader, VersionRecorder} from './index';
+import {release, TypeReader, VersionBumper, VersionDeterminer, VersionReader, VersionRecorder} from 'src/index';
 import 'jest-chain';
 
 describe('lib', () => {
