@@ -1,6 +1,5 @@
 import * as fs from 'fs';
-// @ts-ignore
-import {flow} from "idempotent-release-fp/dist/index.cjs";
+import {flow} from "@bumpup/fp";
 
 const readFile = () => fs.readFileSync('version.txt', {encoding: 'utf8', flag: 'r'});
 

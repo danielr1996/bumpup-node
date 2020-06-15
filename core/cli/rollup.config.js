@@ -1,28 +1,26 @@
-import typescript from '@rollup/plugin-typescript';
+import typescript from 'rollup-plugin-typescript2';
 import shebang from 'rollup-plugin-add-shebang';
-import del from 'rollup-plugin-delete'
+import resolve from '@rollup/plugin-node-resolve';
 
-export default [
-    {
-        input: 'src/index.ts',
-        output: {
-            file: 'dist/index.mjs',
-            format: 'es'
-        },
-        plugins: [
-            typescript(),
-            shebang({include: 'dist/index.mjs'}),
-        ]
-    },
-    {
-        input: 'src/index.ts',
-        output: {
+export default {
+    input: 'src/index.ts',
+    output: [
+        {
             file: 'dist/index.cjs',
             format: 'cjs'
         },
-        plugins: [
-            typescript(),
-            shebang({include: 'dist/index.cjs'}),
-        ]
-    },
-];
+        {
+            file: 'dist/index.mjs',
+            format: 'es'
+        },
+    ],
+    plugins: [
+        resolve(),
+        typescript({
+            clean: true,
+        }),
+        shebang({include: 'dist/index.cjs'}),
+    ],
+    external: ['fs','process','path']
+};
+

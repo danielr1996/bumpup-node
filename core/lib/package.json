@@ -1,47 +1,42 @@
 {
-  "name": "idempotent-release-lib",
-  "version": "0.0.1",
-  "description": "idempotent, configurable and language-agnostic software versioning",
+  "name": "@bumpup/lib",
+  "version": "0.1.0",
+  "description": "configurable and language-agnostic software versioning",
   "keywords": [
-    "idempotent",
     "configurable",
     "language-agnostic",
     "automatic",
     "versioning",
     "semver"
   ],
-  "homepage": "https://github.com/danielr1996/idempotent-release#readme",
-  "bugs": {
-    "url": "https://github.com/danielr1996/idempotent-release/issues"
-  },
+  "homepage": "https://github.com/danielr1996/bumpup#readme",
+  "bugs": "https://github.com/danielr1996/bumpup/issues",
+  "license": "ISC",
+  "author": "Daniel Richter (https://github.com/danielr1996)",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danielr1996/idempotent-release.git"
+    "url": "git+https://github.com/danielr1996/bumpup.git",
+    "directory": "core/fp"
   },
-  "license": "ISC",
-  "author": "Daniel Richter",
-  "main": "dist/index.mjs",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "test": "jest"
   },
   "devDependencies": {
-    "@rollup/plugin-typescript": "^4.1.2",
-    "ava": "^3.8.2",
-    "chai": "^4.2.0",
-    "esm": "^3.2.25",
-    "idempotent-release-fp": "file:../idempotent-release-fp",
+    "@bumpup/fp": "0.1.0",
+    "@types/jest": "^26.0.0",
+    "jest": "^26.0.1",
     "jest-chain": "^1.1.5",
-    "npm": "^6.14.5",
     "rollup": "^2.16.0",
-    "rollup-plugin-delete": "^2.0.0",
-    "tape": "^5.0.1",
+    "rollup-plugin-typescript2": "^0.27.1",
+    "ts-jest": "^26.1.0",
     "tslib": "^2.0.0",
     "typescript": "^3.9.5"
-  },
-  "dependencies": {
-    "@types/jest": "^26.0.0",
-    "babel-tape-runner": "^3.0.0",
-    "jest": "^26.0.1",
-    "ts-jest": "^26.1.0"
   }
 }

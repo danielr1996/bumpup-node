@@ -1,4 +1,4 @@
-import {determine} from "src/index";
+import {determine} from "./index";
 
 describe('idempotent-release-determine-semver', ()=>{
     describe('determine', ()=>{
@@ -10,6 +10,9 @@ describe('idempotent-release-determine-semver', ()=>{
         });
         it('determines major versions correctly',()=>{
             expect(determine('major')('1.5.10')).toBe("2.0.0");
+        });
+        it('determines none versions correctly',()=>{
+            expect(determine('none')('1.5.10')).toBe(null);
         });
     })
 })

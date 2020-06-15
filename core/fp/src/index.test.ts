@@ -1,6 +1,7 @@
 import {flow, lift, match} from "./index";
 
-describe("Functional utils", () => {
+
+describe("@bumpup/fp", () => {
     describe('flow', () => {
         it("pipes functions", () => {
             const fn1 = (val: string) => `fn1(${val})`;

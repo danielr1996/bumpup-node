@@ -1,7 +1,5 @@
 import * as fs from 'fs';
-// FIXME: Ship typing with library
-// @ts-ignore
-import {flow} from "idempotent-release-fp/dist/index.cjs";
+import {flow} from "@bumpup/fp";
 
 const readPackageJson = () => fs.readFileSync('package.json', {encoding: 'utf8', flag: 'r'});
 

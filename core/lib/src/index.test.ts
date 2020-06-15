@@ -1,7 +1,7 @@
-import {release, TypeReader, VersionBumper, VersionDeterminer, VersionReader, VersionRecorder} from 'src/index';
+import {release, TypeReader, VersionBumper, VersionDeterminer, VersionReader, VersionRecorder} from './index';
 import 'jest-chain';
 
-describe('lib', () => {
+describe('@bumpup/lib', () => {
     it('release calls each functions excatly once', () => {
         const getChangeType: TypeReader = jest.fn(lastVersion => 'fix');
         const getLastVersion: VersionReader = jest.fn(() => '1.0.0');

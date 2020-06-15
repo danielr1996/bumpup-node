@@ -1,17 +1,41 @@
 {
-  "name": "idempotent-release-read-file",
-  "version": "0.0.1",
-  "main": "dist/index.js",
-  "type": "module",
+  "name": "@bumpup/version-file",
+  "version": "0.1.0",
+  "description": "configurable and language-agnostic software versioning",
+  "keywords": [
+    "configurable",
+    "language-agnostic",
+    "automatic",
+    "versioning",
+    "semver",
+    "bump",
+    "bumpup"
+  ],
+  "homepage": "https://github.com/danielr1996/bumpup#readme",
+  "bugs": "https://github.com/danielr1996/bumpup/issues",
+  "license": "ISC",
+  "author": "Daniel Richter (https://github.com/danielr1996)",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielr1996/bumpup.git",
+    "directory": "plugins/version-file"
+  },
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "test": "jest"
   },
   "devDependencies": {
-    "@rollup/plugin-typescript": "^4.1.2",
+    "@bumpup/fp": "0.1.0",
+    "@rollup/plugin-node-resolve": "^8.0.1",
     "@types/node": "^14.0.13",
-    "idempotent-release-fp": "file:../idempotent-release-fp",
     "rollup": "^2.16.0",
-    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-typescript2": "^0.27.1",
     "tslib": "^2.0.0",
     "typescript": "^3.9.5"
   }

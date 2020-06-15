@@ -1,10 +1,11 @@
 // @ts-ignore
-import {release} from "idempotent-release-lib/dist/index.cjs";
+import {release} from "@bumpup/lib";
 // @ts-ignore
-import {flow, log} from "idempotent-release-fp/dist/index.cjs";
+import {flow, log} from "@bumpup/fp";
 import * as fs from "fs";
+import * as path from "path";
 
-const readJson = () => fs.readFileSync('idempotent-release.json');
+const readJson = () => fs.readFileSync('bumpup.json');
 
 const parseJson = json => JSON.parse(json);
 
@@ -18,19 +19,15 @@ const getTypeReader = flow(readJson, parseJson, extractTypeReader);
 const getDeterminer = flow(readJson, parseJson, extractVersionDeterminer);
 const getBumper = flow(readJson, parseJson, extractBumper);
 
-async function importReader(){
-    const versionReader = await import(`${getVersionReader()}/dist/index.cjs`);
-    const typeReader = await import(`${getTypeReader()}/dist/index.cjs`);
-    const versionDeterminer = await import(`${getDeterminer()}/dist/index.cjs`)
-    const bumper = await import(`${getBumper()}/dist/index.cjs`)
-    const getLastVersion = flow(versionReader.getLastVersion, log('Read Version'));
-    const getType = flow(typeReader.getType, log('Read Type'));
-    const record = flow(typeReader.record);
-    const determine = flow(versionDeterminer.determine)
-    const bump = flow(bumper.bump);
+async function importReader() {
+    const {getLastVersion} = await import(path.resolve('node_modules', getVersionReader()))
+    const {record, getType} = await import(path.resolve('node_modules', getTypeReader()))
+    const {determine} = await import(path.resolve('node_modules', getDeterminer()))
+    const {bump} = await import(path.resolve('node_modules', getBumper()))
     const rel = release(getLastVersion)(getType)(determine)(bump)(record);
     rel();
 }
+
 importReader();
 
 

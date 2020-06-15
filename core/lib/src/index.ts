@@ -1,6 +1,3 @@
-// @ts-ignore
-import {log, flow} from "idempotent-release-fp/dist/index.cjs";
-
 export type VersionReader = () => string;
 export type TypeReader = (string) => string;
 export type VersionDeterminer = (string) => (string) => string;
@@ -15,8 +12,11 @@ export const release =
                 (bumper: VersionBumper) => (recorder: VersionRecorder): Releaser => {
                     return () => {
                         const lastVersion = vReader();
+                        console.log(`bumpup: current version is ${lastVersion}`)
                         const type = tReader(lastVersion);
+                        console.log(`bumpup: change type is ${type}`)
                         const newVersion = determiner(type)(lastVersion);
+                        console.log(newVersion !== null ? `bumpup: new version is ${newVersion}`: `bumpup: no new version`)
                         bumper(newVersion);
                         recorder(newVersion);
                     };

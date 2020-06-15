@@ -1,0 +1,45 @@
+{
+  "name": "@bumpup/bump-file",
+  "version": "0.1.0",
+  "description": "configurable and language-agnostic software versioning",
+  "keywords": [
+    "configurable",
+    "language-agnostic",
+    "automatic",
+    "versioning",
+    "semver",
+    "bump",
+    "bumpup"
+  ],
+  "homepage": "https://github.com/danielr1996/bumpup#readme",
+  "bugs": "https://github.com/danielr1996/bumpup/issues",
+  "license": "ISC",
+  "author": "Daniel Richter (https://github.com/danielr1996)",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielr1996/bumpup.git",
+    "directory": "plugins/bump-file"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@bumpup/fp": "0.1.0",
+    "@rollup/plugin-node-resolve": "^8.0.1",
+    "@types/jest": "^26.0.0",
+    "@types/node": "^14.0.13",
+    "jest": "^26.0.1",
+    "rollup": "^2.16.0",
+    "rollup-plugin-typescript2": "^0.27.1",
+    "ts-jest": "^26.1.0",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.5"
+  }
+}
