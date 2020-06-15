@@ -20,6 +20,5 @@ export default [
         },
         plugins: [
             typescript(),
-            del({targets: 'dist/*'})
         ]
     },];

@@ -1,4 +1,4 @@
-import {release, TypeReader, VersionBumper, VersionDeterminer, VersionReader} from './index';
+import {release, TypeReader, VersionBumper, VersionDeterminer, VersionReader, VersionRecorder} from './index';
 import 'jest-chain';
 
 describe('lib', () => {
@@ -8,7 +8,8 @@ describe('lib', () => {
         const getNewVersionFromLastVersion = jest.fn(lastVersion => '1.0.1');
         const getNewVersion: VersionDeterminer = jest.fn(changeType => getNewVersionFromLastVersion);
         const bump: VersionBumper = jest.fn(console.log);
-        const rel = release(getLastVersion)(getChangeType)(getNewVersion)(bump);
+        const record: VersionRecorder = jest.fn(console.log);
+        const rel = release(getLastVersion)(getChangeType)(getNewVersion)(bump)(record);
         rel();
 
         expect(getChangeType).toHaveBeenCalledTimes(1);
@@ -16,5 +17,6 @@ describe('lib', () => {
         expect(getNewVersion).toHaveBeenCalledWith('fix').toHaveBeenCalledTimes(1);
         expect(getNewVersionFromLastVersion).toHaveBeenCalledWith('1.0.0').toHaveBeenCalledTimes(1);
         expect(bump).toHaveBeenCalledWith('1.0.1').toHaveBeenCalledTimes(1)
+        expect(record).toHaveBeenCalledWith('1.0.1').toHaveBeenCalledTimes(1)
     })
 })

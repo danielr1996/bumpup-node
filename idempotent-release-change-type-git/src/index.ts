@@ -1,15 +1,17 @@
 import * as child_process from "child_process";
 // @ts-ignore
-import {flow, match} from "idempotent-release-fp/dist/index.cjs";
+import {flow, match, debug} from "idempotent-release-fp/dist/index.cjs";
 import * as conventionalCommitsParser from 'conventional-commits-parser';
+import fs from "fs";
 
 const COMMIT_SEPERATOR = `++COMMIT_SEPERATOR++`
 const GIT_COMMAND = `git log --pretty=format:%B${COMMIT_SEPERATOR} .`;
+const GIT_COMMIT_MESSAGE =(newVersion)=>`chore(release): release version ${newVersion}`;
 
 export type CommitMessage = {
     type?: string,
     scope?: string,
-    subject?: string,
+    subject?: string | null,
     header?: string,
     notes?: [{ title: string, text: string }]
 }
@@ -30,7 +32,16 @@ export const parseCommitMessage = (message: string): CommitMessage => {
 };
 export const parseCommitMessages = (messages: string[]): CommitMessage[] => messages.map(parseCommitMessage);
 
-export const filterToLastVersion = (lastVersion: string) => (messages: CommitMessage[]) => messages;
+export const filterToLastVersion = (lastVersion: string) => (messages: CommitMessage[]) => {
+    let filtered: CommitMessage[] = [];
+    for(let message of messages){
+        if(message.subject !== GIT_COMMIT_MESSAGE(lastVersion)){
+            filtered.push(message);
+            break;
+        }
+    }
+    return filtered;
+};
 
 export const getCommitType = (message: CommitMessage): CommitType => match([
     {test: message.notes?.map(note => note.title).includes('BREAKING CHANGE'), value: 'major'},
@@ -49,10 +60,21 @@ export const determineHighestCommitType = (types: CommitType[]): CommitType => t
     {test: true, value: acc},
 ]), 'none')
 
-export const getType = flow(
+export const getType = lastVersion => flow(
     getCommandLineOutput,
     parseCommandLineOutput,
     parseCommitMessages,
+    filterToLastVersion(lastVersion),
     getCommitTypes,
     determineHighestCommitType,
-);
+)(lastVersion);
+
+
+export const record = newVersion => {
+    if(newVersion!==null){
+        console.log('Recording version ',newVersion);
+        child_process.execSync((`git add . && git commit -m "${GIT_COMMIT_MESSAGE(newVersion)}"`))
+    }else{
+        console.log('Nothing changed. Not recording.');
+    }
+}

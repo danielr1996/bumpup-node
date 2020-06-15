@@ -33,6 +33,7 @@
     "idempotent-release-lib": "file:../idempotent-release-lib",
     "idempotent-release-read-file": "file:../idempotent-release-read-file",
     "idempotent-release-read-package-json": "file:../idempotent-release-read-package-json",
+    "idempotent-release-bump-file": "file:../idempotent-release-bump-file",
     "rollup": "^2.16.0",
     "rollup-plugin-add-shebang": "^0.3.1",
     "rollup-plugin-delete": "^2.0.0",

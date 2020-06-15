@@ -16,5 +16,10 @@
     {
       "determiner": "idempotent-release-determine-semver"
     }
+  ],
+  "bump": [
+    {
+      "bumper": "idempotent-release-bump-file"
+    }
   ]
 }

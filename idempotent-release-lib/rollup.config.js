@@ -10,7 +10,6 @@ export default [
         },
         plugins: [
             typescript(),
-            // del({targets: 'dist/*'})
         ],
     },
     {
@@ -21,7 +20,6 @@ export default [
         },
         plugins: [
             typescript(),
-            // del({targets: 'dist/*'})
         ]
     },
 ];
