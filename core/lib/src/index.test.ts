@@ -7,8 +7,8 @@ describe('@bumpup/lib', () => {
         const getLastVersion: VersionReader = jest.fn(() => '1.0.0');
         const getNewVersionFromLastVersion = jest.fn(lastVersion => '1.0.1');
         const getNewVersion: VersionDeterminer = jest.fn(changeType => getNewVersionFromLastVersion);
-        const bump: VersionBumper = jest.fn(()=>{});
-        const record: VersionRecorder = jest.fn(()=>{});
+        const bump: VersionBumper = jest.fn(version=>({status: '', message: ''}));
+        const record: VersionRecorder = jest.fn(version=>({status: '', message: ''}));
         const rel = release(getLastVersion)(getChangeType)(getNewVersion)(bump)(record);
         rel();
 
