@@ -29,13 +29,9 @@
   "scripts": {
     "build": "rollup -c",
     "test": "exit 0",
-    "version": "bumpup"
+    "version": "node ../../core/cli/dist/index.cjs"
   },
   "devDependencies": {
-    "@bumpup/cli": "^0.1.1",
-    "@bumpup/determine-semver": "^0.1.0",
-    "@bumpup/type-git": "^0.1.0",
-    "@bumpup/version-package-json": "^0.1.0",
     "@bumpup/fp": "../../core/fp",
     "@rollup/plugin-node-resolve": "^8.0.1",
     "@types/jest": "^26.0.0",

@@ -1,22 +1,22 @@
 {
   "read": [
     {
-      "reader": "@bumpup/version-package-json"
+      "reader": "../../../plugins/version-package-json"
     }
   ],
   "type": [
     {
-      "reader": "@bumpup/type-git"
+      "reader": "../../../plugins/type-git"
     }
   ],
   "determine": [
     {
-      "determiner": "@bumpup/determine-semver"
+      "determiner": "../../../plugins/determine-semver"
     }
   ],
   "bump": [
     {
-      "bumper": "../dist/index.cjs"
+      "bumper": "../../../plugins/bump-package-json"
     }
   ]
 }
