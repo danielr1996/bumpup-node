@@ -79,13 +79,13 @@ export const getType = lastVersion => flow(
 
 export const record = newVersion => {
     if (newVersion !== null) {
-        console.log('Recording version ', newVersion);
         try {
             child_process.execSync((`git add . && git commit -m "${GIT_COMMIT_MESSAGE(newVersion)}"`))
         } catch (e) {
-            console.log(e.stdout.toString());
+            return {status: 'error', message: e.stdout.toString()}
         }
+        return {status: 'success', message: `record: Recording version ${newVersion}`}
     } else {
-        console.log('Nothing changed. Not recording.');
+        return {status: 'success', message: `record: Nothing changed. Not recording.`}
     }
 }

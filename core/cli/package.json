@@ -33,12 +33,12 @@
     "version": "node dist/index.cjs"
   },
   "devDependencies": {
-    "@bumpup/fp": "0.1.0",
-    "@bumpup/bump-package-json": "^0.1.0",
-    "@bumpup/determine-semver": "^0.1.0",
-    "@bumpup/type-git": "^0.1.0",
-    "@bumpup/version-package-json": "^0.1.0",
-    "@bumpup/lib": "0.1.0",
+    "@bumpup/fp": "../fp",
+    "@bumpup/bump-package-json": "../../plugins/bump-package-json",
+    "@bumpup/determine-semver": "../../plugins/determine-semver",
+    "@bumpup/type-git": "../../plugins/type-git",
+    "@bumpup/version-package-json": "../../plugins/version-package-json",
+    "@bumpup/lib": "../lib",
     "@rollup/plugin-node-resolve": "^8.0.1",
     "@types/node": "^14.0.13",
     "rollup": "^2.16.0",

@@ -1,14 +1,14 @@
 import * as fs from "fs";
 import {flow} from "@bumpup/fp";
 
-export const bump = newVersion=>{
-    if(newVersion!==null){
-        console.log('Bumping version ',newVersion);
+export const bump = newVersion => {
+    if (newVersion !== null) {
         const packageJson = flow(readPackageJson, parsePackageJson)();
         packageJson.version = newVersion;
-        fs.writeFileSync('package.json',JSON.stringify(packageJson, null, 2));
-    }else{
-        console.log('Nothing changed. Not bumping');
+        fs.writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
+        return {status: 'success', message: `bump: Bumping version ${newVersion}`};
+    } else {
+        return {status: 'success', message: 'bump: Nothing changed. Not bumping'};
     }
 };
 

@@ -37,7 +37,7 @@
     "@bumpup/determine-semver": "^0.1.0",
     "@bumpup/type-git": "^0.1.0",
     "@bumpup/version-package-json": "^0.1.0",
-    "@bumpup/fp": "0.1.0",
+    "@bumpup/fp": "../../core/fp",
     "@rollup/plugin-node-resolve": "^8.0.1",
     "@types/node": "^14.0.13",
     "rollup": "^2.16.0",
