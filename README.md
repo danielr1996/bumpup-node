@@ -52,8 +52,6 @@ make sure a plugin can read the value that the previous plugins returned.
 The `plugin-determine-semver` plugin expects a valid semver string (e.g. `1.2.3`) and a valid change type (`major`, `minor` or `patch`).
 If you use that with a plugin that uses timestamps as versions thats not going to work.
 
-
-
 ## Components / What's inside?
 `bumpup` is structured as a monorepo and consists of the following subpackages. For detailed information on
 each packages see the README.md in each package's directory.
