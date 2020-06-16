@@ -1,6 +1,12 @@
-# bumpup
-> ⚠ This is still a work in progress. While the core library already works well, not all use cases may already
-> supported
+# 📦🏷bumpup
+**fully automated and extensible software versioning**
+
+[![bumpup](https://img.shields.io/badge/%F0%9F%93%A6%F0%9F%8F%B7%EF%B8%8F-bumpup-informational)](https:/github.com/danielr1996/bumpup)
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+[![Open Source Love png1](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![Awesome Badges](https://img.shields.io/badge/badges-awesome-green.svg)](https://github.com/Naereen/badges)
+> 🚧 This is still a work in progress. While the core library already works well, not all use cases may already
+> supported.
 
 The best of
 [standard-version](https://github.com/conventional-changelog/standard-version#readme),
@@ -9,13 +15,13 @@ The best of
 
 ## Highlights
 - configurable
-- extensible
+- extensible through plugins
 - automated
 - monorepo compatible
 - does one thing and does it well
 
 ## Key Concepts
-bumpup focuses on automating the typical steps involved in software versioning, which usually are
+`bumpup` focuses on automating the typical steps involved in software versioning, which usually are
 - reading the current version from somewhere, e.g. `package.json` or `composer.json`
 - determining what the next version should be according to the changes since the last version, e.g. using `semver`
 - updating the version, e.g. in `package.json`, `composer.json` but also in files that are part of your source code, to
@@ -27,7 +33,7 @@ anything. This is accomplished by stripping out all the heavy work of reading ve
 it to plugins. 
 
 ### Lifecycle
-The bumpup lifecycle consists of the following steps:
+The `bumpup` lifecycle consists of the following steps:
 1. Get the current version
 2. Get the type of changes since the last version
 3. Determine what the new version should be using the last version and type of change
@@ -54,7 +60,7 @@ each packages see the README.md in each package's directory.
 The core packages are `cli` and `lib`, all other packages are plugins for the individual lifecycle steps.
 
 ### lib
-This is the heart of bumpup. It only executes the lifecycle steps and nothing else.
+This is the heart of `bumpup`. It only executes the lifecycle steps and nothing else.
 
 ### cli
 This is the user facing part of `bumpup`, it's used from the command line and passes the plugins that should
@@ -92,11 +98,13 @@ This could probably a completely independant package.
 - ship fp as own library
 - use more typescript types
 - bootstrap config
--ability to skip steps
+- support options for plugins
+- ability to skip steps
 - interactive mode, ask before writing
 - default config
 - different logging modes
 - linting
+- load plugins from lib and not from cli
 - Refactoring:
     - Cleanup package.jsons
     - Ship types with library

@@ -1,6 +1,5 @@
 import * as child_process from "child_process";
 import {flow, match, debug} from "@bumpup/fp";
-import {sync} from "./conventional-commits-parser"
 
 const COMMIT_SEPERATOR = `++COMMIT_SEPERATOR++`
 const GIT_COMMAND = `git log --pretty=format:%B${COMMIT_SEPERATOR} .`;
