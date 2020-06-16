@@ -103,6 +103,7 @@ This could probably a completely independant package.
 - different logging modes
 - linting
 - load plugins from lib and not from cli
+- bumpup -v: Show version of cli, fp, lib and all plugins
 - Refactoring:
     - Cleanup package.jsons
     - Ship types with library
