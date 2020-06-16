@@ -28,17 +28,16 @@ jobs:
           NPM_TOKEN: DUMMY
         run: |
           npx gulp ci
-      - name: Test
-        env:
-          NPM_TOKEN: DUMMY
-        run: |
-          npx gulp test
       - name: Build
         env:
           NPM_TOKEN: DUMMY
         run: |
           npx gulp build
-          ls -la
+      - name: Test
+        env:
+          NPM_TOKEN: DUMMY
+        run: |
+          npx gulp test
       - name: Version
         env:
           NPM_TOKEN: DUMMY
@@ -48,5 +47,4 @@ jobs:
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
         run: |
-          ls -la
           npx gulp publish
