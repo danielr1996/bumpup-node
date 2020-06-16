@@ -1,26 +1,17 @@
 {
-  "name": "idempotent-release",
-  "version": "0.0.1",
-  "description": "idempotent, configurable and language-agnostic software versioning",
-  "main": "index.js",
+  "name": "@bumpup/mono",
+  "version": "1.0.0",
+  "private": true,
+  "description": "this package.json is just used to track dependencies of the individual packages of this monorepo",
   "scripts": {
+    "install": "npx gulp install",
+    "test": "npx gulp test",
+    "build": "npx gulp build",
+    "version": "npx gulp version",
+    "publish": "npx gulp publish"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/danielr1996/idempotent-release.git"
-  },
-  "keywords": [
-    "idempotent",
-    "configurable",
-    "language-agnostic",
-    "automatic",
-    "versioning",
-    "semver"
-  ],
-  "author": "Daniel Richter",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/danielr1996/idempotent-release/issues"
-  },
-  "homepage": "https://github.com/danielr1996/idempotent-release#readme"
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-shell": "^0.8.0"
+  }
 }
