@@ -1,26 +1,46 @@
 import gulp from 'gulp'
 import * as fs from 'fs';
+import * as path from 'path';
+import * as child_process from 'child_process';
 
-const packagedirs = ['core', 'plugins'];
 
-const builddirs = packagedirs
-    .flatMap(dir => fs.readdirSync(dir, {withFileTypes: true})
-        .filter(direntry => direntry.isDirectory())
-        .map(direntry => direntry.name));
+const builddirs = dir => fs.readdirSync(dir, {withFileTypes: true})
+    .filter(direntry => direntry.isDirectory())
+    .map(direntry => path.join(dir, direntry.name));
 
-const task = task=>cb=>{
+const packagedirs = ['core/fp', 'core/lib', 'core/cli'].concat(builddirs('plugins'));
+
+
+const task = task => cb => {
     task();
     cb();
 }
+const doInDir = fn => dir => {
+    const cwd = process.cwd();
+    process.chdir(dir);
+    fn(process.cwd());
+    process.chdir(cwd);
+}
 
-const install = () => console.log(builddirs);
-const test = () => console.log('Test');
-const build = () => console.log('Build');
-const version = () => console.log('Version');
-const publish = () => console.log('Publish');
+
+const install = () => packagedirs.forEach(doInDir(dir => {
+    console.log(child_process.execSync('npm ci').toString());
+}));
+const test = () => {
+    console.log(child_process.execSync(`jest --bail --silent --colors --projects ${packagedirs.join(' ')}`).toString())
+}
+const build = () => packagedirs.forEach(doInDir(dir => {
+    console.log(child_process.execSync('npm run build').toString());
+}));
+const version = () => packagedirs.forEach(doInDir(dir => {
+    console.log(child_process.execSync('npm run version').toString());
+}));
+const publish = () => packagedirs.forEach(doInDir(dir => {
+    console.log(child_process.execSync('npm publish --access=public').toString());
+}));
 
 gulp.task('install', task(install));
-gulp.task('test', task(build));
+gulp.task('test', task(test));
 gulp.task('build', task(build));
-gulp.task('version', task(build));
-gulp.task('publish', task(build));
+gulp.task('version', task(version));
+gulp.task('publish', task(publish));

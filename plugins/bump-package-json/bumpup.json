@@ -1,0 +1,22 @@
+{
+  "read": [
+    {
+      "reader": "@bumpup/version-package-json"
+    }
+  ],
+  "type": [
+    {
+      "reader": "@bumpup/type-git"
+    }
+  ],
+  "determine": [
+    {
+      "determiner": "@bumpup/determine-semver"
+    }
+  ],
+  "bump": [
+    {
+      "bumper": "../dist/index.cjs"
+    }
+  ]
+}

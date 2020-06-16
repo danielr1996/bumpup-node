@@ -4,14 +4,14 @@
   "private": true,
   "description": "this package.json is just used to track dependencies of the individual packages of this monorepo",
   "scripts": {
-    "install": "npx gulp install",
-    "test": "npx gulp test",
-    "build": "npx gulp build",
-    "version": "npx gulp version",
-    "publish": "npx gulp publish"
+    "install": "gulp install",
+    "test": "gulp test",
+    "build": "gulp build",
+    "version": "gulp version",
+    "publish": "gulp publish"
   },
   "devDependencies": {
     "gulp": "^4.0.2",
-    "gulp-shell": "^0.8.0"
+    "jest": "^26.0.1"
   }
 }

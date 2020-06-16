@@ -12,7 +12,7 @@ jobs:
     runs-on: 'ubuntu-latest'
     strategy:
       matrix:
-        node-version: ['14.x','13.x','12.x','10.x']
+        node-version: ['14.x','13.x','12.x']
     steps:
       - uses: actions/checkout@v2
       - name: Install Node
@@ -20,6 +20,8 @@ jobs:
         with:
           node-version: ${{matrix.node-version}}
       - name: Build
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
         run: |
           npm ci
           npx gulp install

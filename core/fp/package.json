@@ -28,9 +28,15 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "test": "jest"
+    "test": "jest --silent --colors",
+    "version": "bumpup"
   },
   "devDependencies": {
+    "@bumpup/cli": "^0.1.1",
+    "@bumpup/bump-package-json": "^0.1.0",
+    "@bumpup/determine-semver": "^0.1.0",
+    "@bumpup/type-git": "^0.1.0",
+    "@bumpup/version-package-json": "^0.1.0",
     "@types/jest": "^26.0.0",
     "jest": "^26.0.1",
     "rollup": "^2.16.0",

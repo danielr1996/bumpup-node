@@ -28,9 +28,14 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "test": "jest"
+    "test": "exit 0",
+    "version": "bumpup"
   },
   "devDependencies": {
+    "@bumpup/cli": "^0.1.1",
+    "@bumpup/determine-semver": "^0.1.0",
+    "@bumpup/type-git": "^0.1.0",
+    "@bumpup/version-package-json": "^0.1.0",
     "@bumpup/fp": "0.1.0",
     "@rollup/plugin-node-resolve": "^8.0.1",
     "@types/jest": "^26.0.0",
