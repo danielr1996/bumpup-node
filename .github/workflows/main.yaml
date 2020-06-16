@@ -27,7 +27,7 @@ jobs:
           # Need to set a valid env, otherwise npm complains with "Failed to replace env in config: ${NPM_TOKEN}"
           NPM_TOKEN: DUMMY
         run: |
-          npx gulp install
+          npx gulp ci
       - name: Test
         env:
           NPM_TOKEN: DUMMY

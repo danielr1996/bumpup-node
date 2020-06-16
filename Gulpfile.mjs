@@ -24,8 +24,13 @@ const doInDir = fn => dir => {
 
 
 const install = () => packagedirs.forEach(doInDir(dir => {
+    console.log(child_process.execSync('npm install').toString());
+}));
+
+const ci = () => packagedirs.forEach(doInDir(dir => {
     console.log(child_process.execSync('npm ci').toString());
 }));
+
 const test = () => {
     console.log(child_process.execSync(`jest --bail --silent --colors --projects ${packagedirs.join(' ')}`).toString())
 }
@@ -40,6 +45,7 @@ const publish = () => packagedirs.forEach(doInDir(dir => {
 }));
 
 gulp.task('install', task(install));
+gulp.task('ci', task(ci));
 gulp.task('test', task(test));
 gulp.task('build', task(build));
 gulp.task('version', task(version));
