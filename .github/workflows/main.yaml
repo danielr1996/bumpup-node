@@ -12,7 +12,7 @@ jobs:
     runs-on: 'ubuntu-latest'
     strategy:
       matrix:
-        node-version: ['14.x','13.x','12.x']
+        node-version: ['14.x']
     steps:
       - uses: actions/checkout@v2
       - name: Install Node
@@ -43,8 +43,14 @@ jobs:
           NPM_TOKEN: DUMMY
         run: |
           npx gulp version
+      - name: Push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/danielr1996/bumpup.git"
+          git push "${remote_repo}" ${GITHUB_REF#"refs/heads/"} --follow-tags
       - name: Publish
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
         run: |
-          npx gulp publish
+          npx gulp publish & exit 0
