@@ -3,13 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "description": "this package.json is just used to track dependencies of the individual packages of this monorepo",
-  "scripts": {
-    "install": "gulp install",
-    "test": "gulp test",
-    "build": "gulp build",
-    "version": "gulp version",
-    "publish": "gulp publish"
-  },
   "devDependencies": {
     "gulp": "^4.0.2",
     "jest": "^26.0.1"

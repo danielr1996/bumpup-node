@@ -19,9 +19,34 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{matrix.node-version}}
+      - name: Prepare
+        run: |
+          npm ci
+      - name: Install
+        env:
+          # Need to set a valid env, otherwise npm complains with "Failed to replace env in config: ${NPM_TOKEN}"
+          NPM_TOKEN: DUMMY
+        run: |
+          npx gulp install
+      - name: Test
+        env:
+          NPM_TOKEN: DUMMY
+        run: |
+          npx gulp test
       - name: Build
+        env:
+          NPM_TOKEN: DUMMY
+        run: |
+          npx gulp build
+          ls -la
+      - name: Version
+        env:
+          NPM_TOKEN: DUMMY
+        run: |
+          npx gulp version
+      - name: Publish
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
         run: |
-          npm ci
-          npx gulp install
+          ls -la
+          npx gulp publish
