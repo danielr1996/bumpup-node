@@ -38,6 +38,7 @@ const build = () => packagedirs.forEach(doInDir(dir => {
     console.log(child_process.execSync('npm run build').toString());
 }));
 const version = () => packagedirs.forEach(doInDir(dir => {
+    console.log(child_process.execSync('git log --oneline .').toString());
     console.log(child_process.execSync('npm run version').toString());
 }));
 const publish = () => packagedirs.forEach(doInDir(dir => {

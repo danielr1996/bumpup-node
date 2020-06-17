@@ -15,13 +15,19 @@ jobs:
         node-version: ['14.x']
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Install Node
         uses: actions/setup-node@v1
         with:
           node-version: ${{matrix.node-version}}
       - name: Prepare
         run: |
+          git config --global user.email "danielrichter@posteo.de"
+          git config --global user.name "Github Actions"
           npm ci
+          git branch
+          git log --oneline
       - name: Install
         env:
           # Need to set a valid env, otherwise npm complains with "Failed to replace env in config: ${NPM_TOKEN}"
