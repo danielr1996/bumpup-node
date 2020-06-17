@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@bumpup/fp": "../fp",
+    "@rollup/plugin-node-resolve": "^8.0.1",
     "@types/jest": "^26.0.0",
     "jest": "^26.0.1",
     "jest-chain": "^1.1.5",
@@ -39,5 +40,6 @@
     "ts-jest": "^26.1.0",
     "tslib": "^2.0.0",
     "typescript": "^3.9.5"
-  }
+  },
+  "dependencies": {}
 }

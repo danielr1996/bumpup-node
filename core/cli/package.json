@@ -32,6 +32,11 @@
     "test": "exit 0",
     "version": "node ../../core/cli/dist/index.cjs"
   },
+  "fakeDependencies": {
+    "This is a temporary hack to trigger a commit in this package and therefore a build for dependant library": "",
+    "Increase the version below if you change something in lib and want cli to get rebuild too": "",
+    "@bumpup/lib": "1"
+  },
   "devDependencies": {
     "@bumpup/fp": "../fp",
     "@bumpup/lib": "../lib",

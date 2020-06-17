@@ -84,8 +84,8 @@ export const record = newVersion => {
         } catch (e) {
             return {status: 'error', message: e.stdout.toString()}
         }
-        return {status: 'success', message: `record: Recording version ${newVersion}`}
+        return {status: 'success', message: `Recording version ${newVersion}`}
     } else {
-        return {status: 'success', message: `record: Nothing changed. Not recording.`}
+        return {status: 'success', message: `Nothing changed. Not recording.`}
     }
 }

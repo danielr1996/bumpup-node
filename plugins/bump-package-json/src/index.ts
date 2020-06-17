@@ -6,9 +6,9 @@ export const bump = newVersion => {
         const packageJson = flow(readPackageJson, parsePackageJson)();
         packageJson.version = newVersion;
         fs.writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
-        return {status: 'success', message: `bump: Bumping version ${newVersion}`};
+        return {status: 'success', message: `👊 Bumping version ${newVersion}`};
     } else {
-        return {status: 'success', message: 'bump: Nothing changed. Not bumping'};
+        return {status: 'success', message: '👊 Nothing changed. Not bumping'};
     }
 };
 
