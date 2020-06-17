@@ -42,7 +42,7 @@ const version = () => packagedirs.forEach(doInDir(dir => {
     console.log(child_process.execSync('npm run version').toString());
 }));
 const publish = () => packagedirs.forEach(doInDir(dir => {
-    console.log(child_process.execSync('npm publish --access=public').toString());
+    console.log(child_process.execSync('npm publish --access=public & exit 0').toString());
 }));
 
 gulp.task('install', task(install));
