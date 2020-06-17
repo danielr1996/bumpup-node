@@ -1,6 +1,6 @@
 {
   "name": "@bumpup/cli",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "fully automated and extensible software versioning",
   "keywords": [
     "configurable",
