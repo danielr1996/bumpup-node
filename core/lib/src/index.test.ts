@@ -1,4 +1,13 @@
-import {release, TypeReader, VersionBumper, VersionDeterminer, VersionReader, VersionRecorder} from './index';
+import {
+    emoji,
+    parseEmoji,
+    release,
+    TypeReader,
+    VersionBumper,
+    VersionDeterminer,
+    VersionReader,
+    VersionRecorder
+} from './index';
 import 'jest-chain';
 
 describe('@bumpup/lib', () => {
@@ -7,8 +16,8 @@ describe('@bumpup/lib', () => {
         const getLastVersion: VersionReader = jest.fn(() => '1.0.0');
         const getNewVersionFromLastVersion = jest.fn(lastVersion => '1.0.1');
         const getNewVersion: VersionDeterminer = jest.fn(changeType => getNewVersionFromLastVersion);
-        const bump: VersionBumper = jest.fn(version=>({status: '', message: ''}));
-        const record: VersionRecorder = jest.fn(version=>({status: '', message: ''}));
+        const bump: VersionBumper = jest.fn(version => ({status: '', message: ''}));
+        const record: VersionRecorder = jest.fn(version => ({status: '', message: ''}));
         const rel = release(getLastVersion)(getChangeType)(getNewVersion)(bump)(record);
         rel();
 
@@ -18,5 +27,16 @@ describe('@bumpup/lib', () => {
         expect(getNewVersionFromLastVersion).toHaveBeenCalledWith('1.0.0').toHaveBeenCalledTimes(1);
         expect(bump).toHaveBeenCalledWith('1.0.1').toHaveBeenCalledTimes(1)
         expect(record).toHaveBeenCalledWith('1.0.1').toHaveBeenCalledTimes(1)
+    })
+    describe('emoji', ()=>{
+        it('parses emojies on linux', () => {
+            const emoji = parseEmoji('linux');
+            expect(emoji`📦`).toBe('📦');
+        })
+
+        it('parses emojies on windows', () => {
+            const emoji = parseEmoji('win32');
+            expect(emoji`📦`).toBe('✔');
+        })
     })
 })
