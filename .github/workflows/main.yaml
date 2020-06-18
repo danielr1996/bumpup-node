@@ -26,8 +26,6 @@ jobs:
           git config --global user.email "danielrichter@posteo.de"
           git config --global user.name "Github Actions"
           npm ci
-          git branch
-          git log --oneline
       - name: Install
         env:
           # Need to set a valid env, otherwise npm complains with "Failed to replace env in config: ${NPM_TOKEN}"

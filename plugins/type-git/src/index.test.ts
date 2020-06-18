@@ -3,36 +3,38 @@ import {CommitMessage, CommitType, parseCommitMessage, determineHighestCommitTyp
 describe('@bumpup/type-git', () => {
     describe('parseCommitMessage', () => {
         it('parses fix messages', ()=>{
-            const message =
-`fix(read write): Add name to read and write
+            const message = `
+                fix(read write): Add name to read and write
 
-Signed-off-by: Daniel Richter <danielrichter@posteo.de>`;
+                Signed-off-by: Daniel Richter <danielrichter@posteo.de>`;
 
             expect(parseCommitMessage(message).type).toBe('fix')
-        })
+            expect(parseCommitMessage(message).subject).toBe('Add name to read and write')
+        });
+
         it('parses feat messages', ()=>{
-            const message =
-`feat(write)!: Rename write.js to writer.js
+            const message = `
+                feat(write): Rename write.js to writer.js
 
-Signed-off-by: Daniel Richter <danielrichter@posteo.de>`;
-
+                Signed-off-by: Daniel Richter <danielrichter@posteo.de>`;
             expect(parseCommitMessage(message).type).toBe('feat')
-        })
+            expect(parseCommitMessage(message).subject).toBe('Rename write.js to writer.js')
+        });
         it('parses BREAKING CHANGE messages', ()=>{
-            const message =
-`feat(ngMessages): provide support for dynamic message resolution
+            const message =`
+                feat(ngMessages): provide support for dynamic message resolution
 
-Prior to this fix it was impossible to apply a binding to a the ngMessage directive to represent the name of the error.
+                Prior to this fix it was impossible to apply a binding to a the ngMessage directive to represent the name of the error.
 
-BREAKING CHANGE: The "ngMessagesInclude" attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.
+                BREAKING CHANGE: The "ngMessagesInclude" attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.
 
-Closes #10036
-Closes #9338
-`;
+                Closes #10036
+                Closes #9338`;
 
             expect(parseCommitMessage(message).type).toBe('feat')
+            expect(parseCommitMessage(message).subject).toBe('provide support for dynamic message resolution')
             expect(parseCommitMessage(message).notes.map(note=>note.title)).toContain('BREAKING CHANGE')
-        })
+        });
     })
     describe('getCommitType', () => {
         it('recognizes patch changes', () => {
@@ -69,6 +71,8 @@ Closes #9338
     describe('filterToLastVersion', () => {
         it('should filter only the commits that are newer than the last version', () => {
             const allcommits = [
+                {subject: 'add read.js'},
+                {subject: 'add write.js'},
                 {subject: 'add helper.js'},
                 {subject: 'release version 8.0.0'},
                 {subject: 'release version 7.0.0'},
@@ -83,6 +87,8 @@ Closes #9338
             ];
 
             const filteredcommits = [
+                {subject: 'add read.js'},
+                {subject: 'add write.js'},
                 {subject: 'add helper.js'},
             ]
             expect(filterToLastVersion('8.0.0')(allcommits)).toEqual(filteredcommits);

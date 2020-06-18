@@ -3,7 +3,8 @@ import {flow, match, debug} from "@bumpup/fp";
 
 const COMMIT_SEPERATOR = `++COMMIT_SEPERATOR++`
 const GIT_COMMAND = `git log --pretty=format:%B${COMMIT_SEPERATOR} .`;
-const GIT_COMMIT_MESSAGE = (newVersion) => `chore(release): release version ${newVersion}`;
+const GIT_COMMIT_MESSAGE = (newVersion) => `chore(release): ${GIT_COMMIT_SUBJECT(newVersion)}`;
+const GIT_COMMIT_SUBJECT = (newVersion) => `release version ${newVersion}`;
 
 export type CommitMessage = {
     body?: string,
@@ -27,13 +28,15 @@ export const parseCommandLineOutput = (output: string): string[] => output.trim(
 
 export const parseCommitMessage = (message: string): CommitMessage => {
     const msg: CommitMessage = {notes: []};
-    if (message.startsWith('fix')) {
-        msg.type='fix';
-    } else if (message.startsWith('feat')) {
-        msg.type='feat';
+    msg.subject = message.trim().split(/(\r\n|\r|\n)/).filter(l => !(l === '' || l === '\n'))[0].replace(/.+:(.*)$/, "$1").trim();
+
+    if (message.trim().startsWith('fix')) {
+        msg.type = 'fix';
+    } else if (message.trim().startsWith('feat')) {
+        msg.type = 'feat';
     }
     if (message.includes('BREAKING CHANGE')) {
-        msg.notes.push({title: 'BREAKING CHANGE', text:''})
+        msg.notes.push({title: 'BREAKING CHANGE', text: ''})
     }
     return msg;
 };
@@ -42,10 +45,10 @@ export const parseCommitMessages = (messages: string[]): CommitMessage[] => mess
 export const filterToLastVersion = (lastVersion: string) => (messages: CommitMessage[]) => {
     let filtered: CommitMessage[] = [];
     for (let message of messages) {
-        if (message.subject !== GIT_COMMIT_MESSAGE(lastVersion)) {
-            filtered.push(message);
+        if (message.subject === GIT_COMMIT_SUBJECT(lastVersion)) {
             break;
         }
+        filtered.push(message);
     }
     return filtered;
 };
@@ -71,6 +74,7 @@ export const getType = lastVersion => flow(
     getCommandLineOutput,
     parseCommandLineOutput,
     parseCommitMessages,
+    // debug,
     filterToLastVersion(lastVersion),
     getCommitTypes,
     determineHighestCommitType,
