@@ -23,9 +23,9 @@ export const release =
                         const newVersion = determiner(type)(lastVersion);
                         console.log(`${emoji(`🔎`)} ${newVersion !== null ? `new version is ${newVersion}`: `no new version`}`)
                         bumper(newVersion)
-                        console.log(`${emoji(`👊`)} ${newVersion !== null ? `bumping ${newVersion}`: `no new version`}`)
+                        console.log(`${emoji(`👊`)} bumping version in package.json`)
                         recorder(newVersion)
-                        console.log(`${emoji(`📌`)} ${newVersion !== null ? `recording ${newVersion}`: `no new version`}`)
+                        console.log(`${emoji(`📌`)} recording version in git`)
                         console.log(`${emoji(`📦`)} done`)
                     };
                 }
