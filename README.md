@@ -42,7 +42,7 @@ The `bumpup` lifecycle consists of the following steps:
 
 ## Usage
 ```
-npx autov
+npx bumpup
 ```
 For detailed usage see the cli package
 

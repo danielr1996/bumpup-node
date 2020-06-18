@@ -17,7 +17,7 @@ export const release =
                 (bumper: VersionBumper) => (recorder: VersionRecorder): Releaser => {
                     return () => {
                         const lastVersion = vReader();
-                        console.log(`${emoji`📖`} current version is ${lastVersion}`)
+                        console.log(`${emoji`📖`} last version is ${lastVersion}`)
                         const type = tReader(lastVersion);
                         console.log(`${emoji`🅱`} change type is ${type}`)
                         const newVersion = determiner(type)(lastVersion);
