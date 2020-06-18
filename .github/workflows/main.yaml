@@ -39,6 +39,13 @@ jobs:
           NPM_TOKEN: DUMMY
         run: |
           npx gulp build
+      - name: Checksum
+        env:
+          NPM_TOKEN: DUMMY
+        run: |
+          npx gulp checksum
+          git add .
+          git commit -asm "chore: checksum"
       - name: Test
         env:
           NPM_TOKEN: DUMMY
