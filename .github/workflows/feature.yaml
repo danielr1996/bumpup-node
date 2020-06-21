@@ -30,6 +30,7 @@ jobs:
           node -v
           npx gulp ci
           npx gulp build
+#
 #      - name: Install
 #        env:
 #          # Need to set a valid env, otherwise npm complains with "Failed to replace env in config: ${NPM_TOKEN}"
