@@ -107,7 +107,7 @@ describe('@bumpup/type-git', () => {
             const commiter = jest.fn();
             const data = {newVersion: '1.0.1', version: '1.0.0'}
             const actual = recordWithCommiter(commiter)(data);
-            expect(commiter).toHaveBeenCalledWith(`git add . && git commit -m "${GIT_COMMIT_MESSAGE('1.0.1')}"`);
+            expect(commiter).toHaveBeenCalledWith(`git add . && git commit -sm "${GIT_COMMIT_MESSAGE('1.0.1')}"`);
             expect(actual).toEqual(data);
         })
         it('doesn\'t record for same version', ()=>{

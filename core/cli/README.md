@@ -1,4 +1,5 @@
 # @bumpup/cli
+[![npm version](https://badge.fury.io/js/%40bumpup%2Fcli.svg)](https://badge.fury.io/js/%40bumpup%2Fcli)
 
 This is the cli for bumpup
 

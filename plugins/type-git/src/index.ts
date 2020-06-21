@@ -90,7 +90,7 @@ export const commiter = (message: string): void => {
 
 export const recordWithCommiter = (commiter: Commiter) => (data: BumpupData): BumpupData => {
     if (data.newVersion !== data.version) {
-        commiter(`git add . && git commit -m "${GIT_COMMIT_MESSAGE(data.newVersion)}"`);
+        commiter(`git add . && git commit -sm "${GIT_COMMIT_MESSAGE(data.newVersion)}"`);
     }
     return data;
 }
