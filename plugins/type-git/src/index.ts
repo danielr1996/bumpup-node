@@ -3,7 +3,7 @@ import {flow, match} from "@bumpup/fp";
 import {BumpupData} from "@bumpup/lib";
 
 const COMMIT_SEPERATOR = `++COMMIT_SEPERATOR++`
-const GIT_COMMAND = `git log --pretty=format:%B${COMMIT_SEPERATOR} .`;
+export const GIT_COMMAND = `git log --pretty=format:%B${COMMIT_SEPERATOR} .`;
 export const GIT_COMMIT_MESSAGE = (newVersion: string): string => `chore(release): ${GIT_COMMIT_SUBJECT(newVersion)}`;
 const GIT_COMMIT_SUBJECT = (newVersion: string): string => `release version ${newVersion}`;
 
@@ -19,7 +19,8 @@ export type CommitMessage = {
 
 export type CommitType = 'major' | 'minor' | 'patch' | 'none';
 
-export const getCommandLineOutput = (): string => child_process.execSync(GIT_COMMAND).toString();
+export const getCommandLineOutputWithChildProcess = (cp: { execSync: (string) => Buffer }) => (): string => cp.execSync(GIT_COMMAND).toString();
+export const getCommandLineOutput = getCommandLineOutputWithChildProcess(child_process);
 
 export const parseCommandLineOutput = (output: string): string[] => output.trim().split(COMMIT_SEPERATOR).slice(0, -1);
 
@@ -30,6 +31,7 @@ export const parseCommitMessage = (message: string): CommitMessage => {
     if (message.trim().startsWith('fix')) {
         msg.type = 'fix';
     } else if (message.trim().startsWith('feat')) {
+        console.log('feat')
         msg.type = 'feat';
     }
     if (message.includes('BREAKING CHANGE')) {
@@ -39,10 +41,10 @@ export const parseCommitMessage = (message: string): CommitMessage => {
 };
 export const parseCommitMessages = (messages: string[]): CommitMessage[] => messages.map(parseCommitMessage);
 
-export const filterToLastVersion = (lastVersion: string) => (messages: CommitMessage[]): CommitMessage[] => {
+export const filterToLastVersion = (data: BumpupData) => (messages: CommitMessage[]): CommitMessage[] => {
     const filtered: CommitMessage[] = [];
     for (const message of messages) {
-        if (message.subject === GIT_COMMIT_SUBJECT(lastVersion)) {
+        if (message.subject === GIT_COMMIT_SUBJECT(data.version)) {
             break;
         }
         filtered.push(message);
@@ -68,25 +70,29 @@ export const determineHighestCommitType = (types: CommitType[]): CommitType => t
     {test: acc === 'minor' && cur === 'major', value: cur},
     {test: acc === 'major', value: acc},
     {test: true, value: acc},
-]), 'none')
+]), 'none');
 
-export const step = (data: BumpupData): BumpupData => flow(
-    getCommandLineOutput,
+export const combine =(data: BumpupData) =>(type: string): BumpupData=>({...data,type})
+
+export const stepWithCommandLineOutput = (clo: ()=>string) =>(data: BumpupData): BumpupData => flow(
+    clo,
     parseCommandLineOutput,
     parseCommitMessages,
-    filterToLastVersion(data.version),
+    filterToLastVersion(data),
     getCommitTypes,
     determineHighestCommitType,
-    type => ({...data, type}),
+    combine(data),
 )(data);
+export const step = stepWithCommandLineOutput(getCommandLineOutput);
 export type Commiter = (message: string) => void;
-export const commiter = (message: string): void => {
+export const commiterWithChildProcess = (cp: { execSync: (string) => Buffer })=> (message: string): void => {
     try {
-        child_process.execSync(message)
+        cp.execSync(message)
     } catch (e) {
         console.error(e)
     }
 }
+export const commiter = commiterWithChildProcess(child_process);
 
 export const recordWithCommiter = (commiter: Commiter) => (data: BumpupData): BumpupData => {
     if (data.newVersion !== data.version) {

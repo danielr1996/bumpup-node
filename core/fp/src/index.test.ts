@@ -1,4 +1,4 @@
-import {flow, FunctionalInterface, match} from "./index";
+import {flow, FunctionalInterface, match, pipe, trace} from "./index";
 
 
 describe("@bumpup/fp", () => {
@@ -22,20 +22,20 @@ describe("@bumpup/fp", () => {
             const pipedFunction = flow(toNum, add(2), double, add(4), increment, toStr);
             expect(pipedFunction("1")).toBe("11");
         })
-        it('accept a first function with no arguments', ()=>{
-            const first: FunctionalInterface<void, string> = ()=>'first';
-            const second = str=>str+'second';
-            const third = str=>str+'third';
+        it('accept a first function with no arguments', () => {
+            const first: FunctionalInterface<void, string> = () => 'first';
+            const second = str => str + 'second';
+            const third = str => str + 'third';
 
             const actual = flow(first, second, third)();
             const expected = 'firstsecondthird';
             expect(actual).toBe(expected);
         })
-        it('accept a second function with no arguments', ()=>{
-            const first = ()=>'first';
-            const second = ()=>'second';
-            const third = str=> {
-                if(!str){
+        it('accept a second function with no arguments', () => {
+            const first = () => 'first';
+            const second = () => 'second';
+            const third = str => {
+                if (!str) {
                     console.log(str);
                 }
             };
@@ -45,7 +45,21 @@ describe("@bumpup/fp", () => {
             expect(actual).toBe(expected);
         })
     })
-    // describe('lift', () => {
+    describe('pipe', () => {
+        it("pipes Promises", async () => {
+            const start = jest.fn(() => Promise.resolve(1));
+            const double = jest.fn((val: number) => Promise.resolve(val*2));
+            const triple = jest.fn((val: number)=>val*3);
+
+            const pipedFunction = pipe(start, double, triple);
+            const result = await pipedFunction();
+            expect(result).toBe(6);
+            expect(start).toBeCalled();
+            expect(double).toBeCalledWith(1);
+            expect(triple).toBeCalledWith(2);
+        });
+    })
+    describe('lift', () => {
     //     it('lifts functions without arguments', () => {
     //         const firstname = () => 'John';
     //         const lastname = () => 'Doe';
@@ -53,7 +67,7 @@ describe("@bumpup/fp", () => {
     //         const lifted = lift(greet)(firstname)(lastname);
     //         expect(lifted()).toBe('Hello John Doe')
     //     })
-    // })
+    })
     describe('match', () => {
         it('with no tests', () => {
             expect(match([])).toBe(null);
@@ -76,6 +90,15 @@ describe("@bumpup/fp", () => {
                 {test: true, value: 2},
                 {test: true, value: 3},
             ])).toBe(1);
+        })
+    })
+    describe('trace', () => {
+        it('executes the provided function with the provided valueand returns the provided value', ()=>{
+            const fn = jest.fn();
+            const value = 'x';
+            const result = trace(fn)(value);
+            expect(result).toBe(value);
+            expect(fn).toBeCalledWith(value);
         })
     })
 });

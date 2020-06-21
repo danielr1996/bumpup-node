@@ -1,9 +1,12 @@
 import {
     bumpupWithConfig,
     BumpupConfig,
-    Step, loadSubModuleWithModuleLoader,
+    Step, loadSubModuleWithModuleLoader, loadModule, loadModules, BumpupData,
 } from './index';
 import 'jest-chain';
+import * as fs from 'fs';
+import * as path from 'path';
+import {FunctionalInterface} from "@bumpup/fp";
 
 describe('@bumpup/lib', () => {
     const version: Step = jest.fn(() => ({version: '1.0.0'}));
@@ -55,4 +58,21 @@ describe('@bumpup/lib', () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
+    describe('loadModule', () => {
+        it('loads the module', async () => {
+            const file = path.resolve('node_modules', 'module.js');
+            fs.writeFileSync(file, `module.exports.a = '1';`)
+            expect(await loadModule('module')).toEqual({a: '1'});
+            fs.unlinkSync(file);
+            expect(fs.existsSync(file)).toBeFalsy();
+        })
+        it('loads the modules', async () => {
+            const step = data=>data;
+            const loader: (modulename: string) => Promise<FunctionalInterface<BumpupData, BumpupData>> = () => Promise.resolve(step);
+            const moduleConfig = [step,'step']
+            const expected = [step, step];
+            const actual = await loadModules(loader)(moduleConfig);
+            expect(actual).toEqual(expected);
+        })
+    })
 })
