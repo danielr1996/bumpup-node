@@ -2,7 +2,6 @@ name: Build
 on:
   push:
     branches:
-      - !master
 
 jobs:
   build:
@@ -19,64 +18,24 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{matrix.node-version}}
-      - name: Prepare
-        run: |
-          npm ci
       - name: Build
         env:
           # Need to set a valid env, otherwise npm complains with "Failed to replace env in config: ${NPM_TOKEN}"
           NPM_TOKEN: DUMMY
         run: |
+          npm ci
           node -v
           npx gulp ci
           npx gulp build
-#
-#      - name: Install
-#        env:
-#          # Need to set a valid env, otherwise npm complains with "Failed to replace env in config: ${NPM_TOKEN}"
-#          NPM_TOKEN: DUMMY
-#        run: |
-#          npx gulp ci
-#      - name: Lint
-#        env:
-#          NPM_TOKEN: DUMMY
-#        run: |
-#          npx gulp lint
-#      - name: Build
-#        env:
-#          NPM_TOKEN: DUMMY
-#        run: |
-#          npx gulp build
-#      - name: Checksum
-#        env:
-#          NPM_TOKEN: DUMMY
-#        run: |
-#          npx gulp checksum
-#          git add .
-#          git commit -asm "fix: recompile with new dependencies" & exit 0;
-#      - name: Test
-#        env:
-#          NPM_TOKEN: DUMMY
-#        run: |
-#          npx gulp test
-#      - name: Coverage
-#        env:
-#          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
-#        run: |
-#          bash <(curl -s https://codecov.io/bash)
-#      - name: Version
-#        env:
-#          NPM_TOKEN: DUMMY
-#        run: |
-#          npx gulp version
-#      - name: Push
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        run: |
-#          remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/danielr1996/bumpup.git"
-#          git push "${remote_repo}" ${GITHUB_REF#"refs/heads/"} --follow-tags
-#      - name: Publish
-#        env:
-#          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
-#        run: |
-#          npx gulp publish
+      - name: Test
+        env:
+          NPM_TOKEN: DUMMY
+          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+        run: |
+          npx gulp test
+          bash <(curl -s https://codecov.io/bash)
+      - name: Lint
+        env:
+          NPM_TOKEN: DUMMY
+        run: |
+          npx gulp lint
