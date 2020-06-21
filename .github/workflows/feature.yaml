@@ -1,0 +1,41 @@
+name: Build
+on:
+  push:
+    branches:
+
+jobs:
+  build:
+    name: Build
+    runs-on: 'ubuntu-latest'
+    strategy:
+      matrix:
+        node-version: ['14.x', '13.x', '12.x']
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install Node ${{matrix.node-version}}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{matrix.node-version}}
+      - name: Build
+        env:
+          # Need to set a valid env, otherwise npm complains with "Failed to replace env in config: ${NPM_TOKEN}"
+          NPM_TOKEN: DUMMY
+        run: |
+          npm ci
+          node -v
+          npx gulp ci
+          npx gulp build
+      - name: Test
+        env:
+          NPM_TOKEN: DUMMY
+          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+        run: |
+          npx gulp test
+          bash <(curl -s https://codecov.io/bash)
+      - name: Lint
+        env:
+          NPM_TOKEN: DUMMY
+        run: |
+          npx gulp lint
