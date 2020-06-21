@@ -1,9 +1,9 @@
-name: Pipeline
+name: Build
 on:
   push:
     branches:
       - master
-      - release/*
+      - ci/*
 
 jobs:
   build:
@@ -53,6 +53,11 @@ jobs:
           NPM_TOKEN: DUMMY
         run: |
           npx gulp test
+      - name: Coverage
+        env:
+          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+        run: |
+          bash <(curl -s https://codecov.io/bash)
       - name: Version
         env:
           NPM_TOKEN: DUMMY

@@ -1,10 +1,15 @@
 # 📦🏷bumpup
 **fully automated and extensible software versioning**
 
-[![bumpup](https://img.shields.io/badge/%F0%9F%93%A6%F0%9F%8F%B7%EF%B8%8F-bumpup-informational)](https:/github.com/danielr1996/bumpup)
+[![bumpup](https://img.shields.io/badge/%F0%9F%93%A6-bumpup-informational)](https:/github.com/danielr1996/bumpup)
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 [![Open Source Love png1](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 [![Awesome Badges](https://img.shields.io/badge/badges-awesome-green.svg)](https://github.com/Naereen/badges)
+
+![Build](https://github.com/danielr1996/bumpup/workflows/Build/badge.svg)
+[![codecov](https://codecov.io/gh/danielr1996/bumpup/branch/master/graph/badge.svg)](https://codecov.io/gh/danielr1996/bumpup)
+[![HitCount](http://hits.dwyl.com/danielr1996/bumpup.svg)](http://hits.dwyl.com/danielr1996/bumpup)
 > 🚧 This is still a work in progress. While the core library already works well, not all use cases may already
 > supported.
 
