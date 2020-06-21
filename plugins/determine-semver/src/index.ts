@@ -1,4 +1,5 @@
 import {flow} from "@bumpup/fp";
+import {BumpupData} from "../../../core/lib/src";
 
 
 const split = data => ({...data, newVersion: data.version.split('.').map(x => parseInt(x))})
@@ -19,6 +20,6 @@ const increase = data => {
     return data;
 }
 
-const join = data => ({...data, newVersion: data.newVersion !== null ? data.newVersion.map(x => x.toString()).join('.'): null});
+export const join = (data: { newVersion: string[] }): BumpupData => ({...data, newVersion: data.newVersion.map(x => x.toString()).join('.')});
 
 export const step = flow(split,increase,join);

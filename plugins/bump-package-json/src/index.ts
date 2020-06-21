@@ -11,8 +11,10 @@ export const stepWithFileWriter = (reader: FunctionalInterface<void, string>) =>
     return data;
 };
 
-const writeToFile = data => fs.writeFileSync('package.json', data);
-const readPackageJson = () => fs.readFileSync('package.json', {encoding: 'utf8', flag: 'r'});
+export const writeToFileWithFs = filesystem => data => filesystem.writeFileSync('package.json', data);
+const writeToFile = writeToFileWithFs(fs);
+export const readPackageJsonWithFs = filesystem => () => filesystem.readFileSync('package.json', {encoding: 'utf8', flag: 'r'});
+const readPackageJson = readPackageJsonWithFs(fs);
 
 export const step = stepWithFileWriter(readPackageJson)(writeToFile)
 
