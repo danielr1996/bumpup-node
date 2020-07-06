@@ -33,34 +33,34 @@ Put a `bumpup.json` in your project specifing the plugins to use in your project
 > It is planned for a future version to support multiple plugins per lifecycle steps.
 ```json
 {
-  "read": [
-    {
-      "reader": "@bumpup/version-package-json"
+  "version": "1.0.0",
+  "steps": {
+    "version": {
+      "version": "@bumpup/version-package-json"
+    },
+    "type": {
+      "type": "@bumpup/type-git"
+    },
+    "determine": {
+      "determine": "@bumpup//determine-semver"
+    },
+    "bump": {
+      "bump": "@bumpup/bump-package-json"
+    },
+    "record": {
+      "record": "@bumpup/type-git#record"
     }
-  ],
-  "type": [
-    {
-      "reader": "@bumpup/type-git"
-    }
-  ],
-  "determine": [
-    {
-      "determiner": "@bumpup/determine-semver"
-    }
-  ],
-  "bump": [
-    {
-      "bumper": "@bumpup/bump-package-json"
-    }
-  ]
+  }
 }
+
 ```
 
 Run `bumpup` from the same directory where the `bumpup.json`. You should get an output similiar to
 ```shell script
-bumpup: current version is 1.14.0
-bumpup: change type is minor
-bumpup: new version is 1.15.0
-Bumping version  1.15.0
-Recording version  1.15.0
+✔ current version is 0.0.1
+✔ change type is none
+✔ no new version
+✔ not bumping version in package.json
+✔ not recording version in git
+✔ done
 ```
