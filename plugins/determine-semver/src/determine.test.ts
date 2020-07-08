@@ -1,4 +1,4 @@
-import {step} from "./index";
+import {step} from "./determine";
 
 describe('@bumpup/determine-semver', ()=>{
     describe('determine', ()=>{
