@@ -1,1 +1,1 @@
-export {bump as step} from './bump'
+export {bump as default} from './bump'

@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
-    "declaration": true
+    "declaration": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": false
   },
   "exclude" : ["src/**/*.test.ts"]
 }

@@ -1,37 +1,43 @@
 # Plugins
-Contains the lifecycle plugins for `bumpup`.
+Contains the plugins for `bumpup`.
 
 ## Writing your own plugin
-For details see the included plugins in this folder.
 
-To write your own plugin you need to distribute it as an npm package that exposes one ore more functions at it's 
-entry point. (See the section of each lifecycle below to see which function(s) need to be exposed)
-
-### version
+To write your own plugin you just need two provide a function with the following shape in your configuration:
 ```javascript
-// Takes no input and returns a version string
-export const getLastVersion = () => '1.0.0';
+const plugin = options=>data=>console.log('Hello @bumpup');
 ```
 
-### type
-```javascript
-// Takes the current version and returns the type of change.
-export const getType = version => 'patch';
+If you are using typescript `@bumpup/lib` also exports types that you can use
+```typescript
+export type BumpupData = {
+    version?: string,
+    type?: string,
+    newVersion?: string
+}
 
-// Takes the new version and records it somewhere
-// The @bumpup/type-git plugin uses this step to find all changes since the current version by writing the version to the git log.
-// however this lifecycle step is not needed for every plugin, in that case just export an empty function
-export const record = version => {};
+export type BumpupPluginOptions = Record<string, unknown>;
+export type ConfiguredBumpupPlugin = (data: BumpupData) => BumpupData;
+export type BumpupPlugin = (options: BumpupPluginOptions) => ConfiguredBumpupPlugin;
 ```
 
-### determine
+Then import your plugin in `bumpup.config.mjs` either from node_modules, relative import or completely inline:
 ```javascript
-// Takes the type and returns a function that takes the current version and returns the new version
-export const determine = type => version => '1.0.1'
-```
+import plugin1 from '@my/plugin1'
+import plugin2 from './plugin2'
 
-### bump
-```javascript
-// Takes the version and bumps the version where necessary
-export const record = version => console.log(version);
+const plugin3 = options=>data=>{
+    console.log('I\'m a plugin')
+    return data;
+};
+
+export default {
+  version: "2.0.0",
+  plugins: [
+    plugin1, 
+    plugin2, 
+    [plugin3, {myoption: true}] //provide an options object to your plugin
+  ]
+}
+
 ```

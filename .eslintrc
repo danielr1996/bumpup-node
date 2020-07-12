@@ -12,6 +12,9 @@
   "ignorePatterns": [
     "dist/",
     "Gulpfile.mjs",
-    "jest.config.cjs"
+    "jest.config.cjs",
+    "bumpup.config.js",
+    "bumpup.config.cjs",
+    "bumpup.config.mjs"
   ]
 }

@@ -39,6 +39,7 @@ const lint = () =>{
 const test = () => {
     console.log(child_process.execSync(`jest --silent --colors`).toString())
 }
+
 const build = () => packagedirs.forEach(doInDir(dir => {
     console.log(child_process.execSync('npm run build').toString());
 }));
@@ -51,6 +52,10 @@ const checksum = () => packagedirs.forEach(dir=>{
 const version = () => packagedirs.forEach(doInDir(dir => {
     console.log(child_process.execSync('npm run version').toString());
 }));
+
+const versionDry = () => packagedirs.forEach(doInDir(dir => {
+    console.log(child_process.execSync('npm run version -- --dry').toString());
+}));
 const publish = () => packagedirs.forEach(doInDir(dir => {
     console.log(child_process.execSync('npm publish --access=public & exit 0').toString());
 }));
@@ -62,4 +67,5 @@ gulp.task('test', task(test));
 gulp.task('build', task(build));
 gulp.task('checksum', task(checksum))
 gulp.task('version', task(version));
+gulp.task('version:dry', task(versionDry));
 gulp.task('publish', task(publish));
