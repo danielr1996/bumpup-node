@@ -18,8 +18,9 @@
   "files": [
     "dist"
   ],
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "type": "module",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
@@ -28,10 +29,11 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "version": "node ../../core/cli/dist/index.cjs"
+    "watch": "rollup -c --watch",
+    "version": "node ../../core/cli/dist/index.js"
   },
   "devDependencies": {
-    "@bumpup/fp": "../../core/fp",
+    "@bumpup/fp": "file:../../core/fp",
     "@bumpup/lib": "file:../../core/lib",
     "@rollup/plugin-node-resolve": "^8.0.1",
     "@types/jest": "^26.0.0",
@@ -42,6 +44,7 @@
     "rollup-plugin-typescript2": "^0.27.1",
     "ts-jest": "^26.1.0",
     "tslib": "^2.0.0",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.5",
+    "rollup-plugin-clean": "^1.0.0"
   }
 }

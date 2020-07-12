@@ -16,7 +16,7 @@ describe('@bumpup/determine-semver', () => {
             writeFileSync: jest.fn(),
             readFileSync: jest.fn(() => Buffer.from(raw)),
         }
-        const bump = bumpWithEffects(fs);
+        const bump = bumpWithEffects(fs, {});
         const data = {newVersion: '1.0.2', version: '1.0.1'}
         expect(bump(data)).toBe(data);
         expect(fs.readFileSync).toBeCalled();

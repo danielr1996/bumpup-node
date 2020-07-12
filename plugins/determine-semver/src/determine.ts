@@ -1,8 +1,13 @@
 import {pipe, prop} from "ramda";
-import {BumpupData} from "../../../core/lib/src";
+import {BumpupData} from "@bumpup/lib";
+import {BumpupPlugin} from "@bumpup/lib/src";
+import {emoji, trace} from "@bumpup/fp";
 
 const lift2 = f => g => h => x => f(g(x))(h(x));
-export const applyFnToObj = (fn, key) => obj => ({...obj, [key]: fn(obj)})
+export const applyFnToObj = (fn: (obj: Record<string, unknown>) => unknown, key: string) => (obj: Record<string, unknown>): Record<string, unknown> => ({
+    ...obj,
+    [key]: fn(obj)
+})
 
 const split = version => version.split('.').map(x => parseInt(x))
 
@@ -24,5 +29,5 @@ const increase = type => version => {
 
 export const join = (version: string[]): string => version.map(x => x.toString()).join('.');
 
-export const determine = lift2((type: string): (string) => string => pipe(split, increase(type), join))(prop('type'))(prop('version'));
-export const step: (BumpupData) => BumpupData = applyFnToObj(determine, 'newVersion')
+export const determine = lift2((type: string): (string) => string => pipe(split, increase(type), join),)(prop('type'))(prop('version'));
+export const step: BumpupPlugin = () => pipe(applyFnToObj(determine, 'newVersion'),trace((data: BumpupData) => console.log(`${emoji`🔎`} ${data.newVersion !== data.version ? `new version is ${data.newVersion}` : `no new version`}`)))

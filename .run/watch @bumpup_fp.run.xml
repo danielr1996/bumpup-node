@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="build @bumpup/lib" type="js.build_tools.npm">
-    <package-json value="$PROJECT_DIR$/core/lib/package.json" />
+  <configuration default="false" name="watch @bumpup/fp" type="js.build_tools.npm">
+    <package-json value="$PROJECT_DIR$/core/fp/package.json" />
     <command value="run" />
     <scripts>
-      <script value="build" />
+      <script value="watch" />
     </scripts>
     <node-interpreter value="project" />
     <envs />

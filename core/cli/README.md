@@ -12,55 +12,47 @@ npm install @bumpup/cli --save-dev
 
 Then install the plugins that you'd like to use for the lifecycle steps.
 
-You can use the official plugins under the `@bumpup` scope, or any other plugins that implements the lifecycle steps.
+You can use the official plugins under the `@bumpup` scope, or any other plugin complying to the plugin interface.
 
 ```shell script
 npm install @bumpup/version-package-json @bumpup/type-git @bumpup/determine-semver @bumpup/package-json --save-dev
 ```
 
 ### Configuration
-> Currently only `bumpup.json` is supported as configuration. 
+> 🗑 The old `bumpup.json` is no longer supported.
+
+> Currently only `bumpup.config.mjs` is supported as configuration. 
 > In a future version more configuration sources are planned to be supported, being merged in the following order:
 > - sensible default (@bumpup/version-package-json, @bumpup/type-git, @bumpup/determine-semver, @bumpup/package-json)
-> - `~/.bumpup.json`
-> - as a key in `package.json`
-> - `bumpup.json` (searching up to the filesystem root until a bumpup json is found, like package.json is found )
-> - cli args (`npx bumpup --read ... --type ... --determine ... --bump ...`)
+> - `~/.bumpup.config.mjs`
+> - `bumpup.config.mjs` (searching up to the filesystem root until a `bumpup.config.mjs` is found, like package.json is found )
 
-#### bumpup.json
-Put a `bumpup.json` in your project specifing the plugins to use in your project folder next to your `package.json`.
-> Even though each lifecycle step has an array of plugins currently only the first specified plugins plugin is used.
-> It is planned for a future version to support multiple plugins per lifecycle steps.
-```json
-{
-  "version": "1.0.0",
-  "steps": {
-    "version": {
-      "version": "@bumpup/version-package-json"
-    },
-    "type": {
-      "type": "@bumpup/type-git"
-    },
-    "determine": {
-      "determine": "@bumpup//determine-semver"
-    },
-    "bump": {
-      "bump": "@bumpup/bump-package-json"
-    },
-    "record": {
-      "record": "@bumpup/type-git#record"
-    }
-  }
+#### bumpup.config.mjs
+Put a `bumpup.config.mjs` in your project specifing the plugins to use in your project folder next to your `package.json`.
+
+```js
+import version from '@bumpup/version-package-json';
+import {type, record} from '@bumpup/type-git';
+import bump from '@bumpup/bump-package-json';
+import determine from '@bumpup/determine-semver';
+
+export default {
+    version: "2.0.0",
+    plugins: [
+        version,
+        type,
+        determine,
+        bump,
+        record,
+    ]
 }
-
 ```
 
 Run `bumpup` from the same directory where the `bumpup.json`. You should get an output similiar to
 ```shell script
-✔ current version is 0.0.1
-✔ change type is none
-✔ no new version
-✔ not bumping version in package.json
-✔ not recording version in git
-✔ done
+📖 current version is 2.0.0
+🅱 change type is none
+🔎 no new version
+👊 not bumping version in package.json
+📌 not recording version in git
 ```

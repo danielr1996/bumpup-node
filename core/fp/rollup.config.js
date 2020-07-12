@@ -1,20 +1,16 @@
 import typescript from 'rollup-plugin-typescript2'
+import clean from 'rollup-plugin-clean';
 
 export default {
     input: 'src/index.ts',
     output: [
         {
-            file: 'dist/index.cjs',
-            format: 'cjs'
-        },
-        {
-            file: 'dist/index.mjs',
+            file: 'dist/index.js',
             format: 'es'
         },
     ],
     plugins: [
-        typescript({
-            clean: true,
-        })
+        typescript({clean: true}),
+        clean(),
     ]
 };

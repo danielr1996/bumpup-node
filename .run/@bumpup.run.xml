@@ -1,6 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="jest.config.cjs" type="JavaScriptTestRunnerJest" nameIsGenerated="true">
-    <config-file value="$PROJECT_DIR$/jest.config.cjs" />
+  <configuration default="false" name="@bumpup" type="JavaScriptTestRunnerJest">
     <node-interpreter value="project" />
     <node-options value="" />
     <jest-package value="$PROJECT_DIR$/node_modules/jest" />

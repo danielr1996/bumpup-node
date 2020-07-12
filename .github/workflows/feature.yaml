@@ -2,7 +2,10 @@ name: Build
 on:
   push:
     branches:
-      - !master
+      - '*'         # matches every branch that doesn't contain a '/'
+      - '*/*'       # matches every branch containing a single '/'
+      - '**'        # matches every branch
+      - '!master'   # excludes master
 jobs:
   build:
     name: Build
@@ -34,6 +37,11 @@ jobs:
         run: |
           npx gulp test
           bash <(curl -s https://codecov.io/bash)
+      - name: Version
+        env:
+          NPM_TOKEN: DUMMY
+        run: |
+          npx gulp version:dry
       - name: Lint
         env:
           NPM_TOKEN: DUMMY
