@@ -1,5 +1,5 @@
 import * as child_process from "child_process";
-import {emoji, flow, match, trace} from "@bumpup/fp";
+import {flow, match, trace} from "@bumpup/fp";
 import {BumpupData, BumpupPlugin} from "@bumpup/lib";
 import winston from 'winston';
 import symbols from 'log-symbols';
@@ -54,7 +54,6 @@ export const filterToLastVersion = (data: BumpupData) => (messages: CommitMessag
 };
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 export const getCommitType = (message: CommitMessage): CommitType => match([
     {test: message.notes?.map(note => note.title).includes('BREAKING CHANGE'), value: 'major'},
     {test: message.type === 'fix', value: 'patch'},

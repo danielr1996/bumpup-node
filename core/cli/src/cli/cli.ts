@@ -1,6 +1,4 @@
 import commander from 'commander';
-import {init} from "../commands/init/init";
-import {bump, LogLevel} from "../commands/bump/bump";
 import {version} from '../../package.json';
 import winston from 'winston';
 
@@ -11,7 +9,7 @@ const logger = winston.createLogger({
     ]
 })
 
-export const program: (argv) => Promise<unknown> = async argv => {
+export const program: (bumpSubcommand, initSubcommand) => (argv) => Promise<unknown> = (bumpSubcommand, initSubcommand) => async argv => {
     const program = new commander.Command();
     program.passCommandToAction(false);
 
@@ -23,27 +21,24 @@ export const program: (argv) => Promise<unknown> = async argv => {
 
     program.command('bump', {isDefault: true})
         .description('bumps up the version')
-        .option<boolean>('-d, --dry', `executes all plugins in dry mode, preventing potentially destructive operations`, parseDefault, false)
-        .option<LogLevel>('-l, --log <log-level>', `specifies the log level (error, warn, info, verbose, debug, silly)`, parseLogLevelOption, 'info')
-        .option<string>('-f, --file <config-file>', `which config file to read`, parseDefault, 'bumpup.config.mjs')
-        .action(bump)
+        .option('-d, --dry', `executes all plugins in dry mode, preventing potentially destructive operations`, false)
+        .option('-l, --log <log-level>', `specifies the log level (error, warn, info, verbose, debug, silly)`, parseLogLevelOption, 'info')
+        .option('-f, --file <config-file>', `which config file to read`, 'bumpup.config.mjs')
+        .action(bumpSubcommand)
 
     program.command('init')
         .option('-f, --file <config-file>', `which config file to write`, `bumpup.config.mjs`)
         .description('initializes a default config file')
-        .action(init)
-
+        .action(initSubcommand)
     return program.parseAsync(argv);
 }
 
-const parseEnumarableOption = (enumberable: unknown[]) => (value, prev) => {
+export const parseEnumarableOption: (enumberable: unknown[]) => (value: unknown, previous: unknown) => unknown = enumberable => (value, prev) => {
     if (enumberable.includes(value)) {
         return value;
     }
-    logger.warn(`loglevel "${value}" is invalid, instead the default "${prev}" will be used`)
+    logger.warn(`option "${value}" is invalid, instead the default "${prev}" will be used`)
     return prev;
 }
 
-const parseLogLevelOption = parseEnumarableOption(['error', 'warn', 'info', 'verbose', 'debug', 'silly']);
-
-const parseDefault = (value, prev) => value;
+export const parseLogLevelOption = parseEnumarableOption(['error', 'warn', 'info', 'verbose', 'debug', 'silly']);

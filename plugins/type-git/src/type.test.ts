@@ -10,7 +10,13 @@ import {
     getCommitTypes,
     getCommandLineOutputWithChildProcess,
     GIT_COMMAND,
-    parseCommandLineOutput, parseCommitMessages, stepWithCommandLineOutput, combine, commiterWithChildProcess
+    parseCommandLineOutput,
+    parseCommitMessages,
+    stepWithCommandLineOutput,
+    combine,
+    commiterWithChildProcess,
+    record,
+    step
 } from "./type";
 
 describe('@bumpup/type-git', () => {
@@ -193,16 +199,28 @@ chore(release): release version 1.0.1`
         it('record new version', () => {
             const commiter = jest.fn();
             const data = {newVersion: '1.0.1', version: '1.0.0'}
-            const actual = recordWithCommiter(commiter, {dry: false})(data);
+            const actual = recordWithCommiter(commiter, {dry: false, logLevel: 'error'})(data);
             expect(commiter).toHaveBeenCalledWith(`git add . && git commit -sm "${GIT_COMMIT_MESSAGE('1.0.1')}"`);
             expect(actual).toEqual(data);
         })
         it('doesn\'t record for same version', () => {
             const commiter = jest.fn();
             const data = {newVersion: '1.0.0', version: '1.0.0'}
-            const actual = recordWithCommiter(commiter,{dry: false})(data);
+            const actual = recordWithCommiter(commiter,{dry: false, logLevel: 'error'})(data);
             expect(commiter).toHaveBeenCalledTimes(0);
             expect(actual).toEqual(data);
+        })
+        it('doesn\'t record if the dry option is set', () => {
+            const commiter = jest.fn();
+            const data = {newVersion: '1.0.0', version: '1.0.1'}
+            const actual = recordWithCommiter(commiter,{dry: true, logLevel: 'error'})(data);
+            expect(commiter).toHaveBeenCalledTimes(0);
+            expect(actual).toEqual(data);
+        })
+        it('executes without errors', ()=>{
+            const data = {version: '1.0.0', 'newVersion': '1.0.0'};
+            const options = {logLevel: 'error', dry: true}
+            expect(record(options)(data)).toEqual(data);
         })
     });
     describe('getCommandLineOutputWIthChildProcess', () => {
@@ -238,6 +256,15 @@ chore(release): release version 1.0.1++COMMIT_SEPERATOR++
             expect(stepWithCommandLineOutput({logLevel: 'info'})(clo)(data)).toEqual({version: '1.0.1', type: 'patch'})
         })
     })
+
+    describe('step', ()=>{
+        it('executes without error', ()=>{
+            const data = {version: '1.0.0'};
+            const options = {logLevel: 'error', dry: true}
+            expect(step(options)(data).version).toEqual(data.version);
+        })
+    })
+
     describe('combine', () => {
         it('combines', () => {
             const data = {version: '1.0.1'}

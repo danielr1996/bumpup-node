@@ -3,7 +3,6 @@ import * as fs from "fs";
 import {PathLike} from "fs";
 import {writeFileWithFs} from "./write";
 import {readFileWithFs} from "./read";
-import {emoji, trace} from "@bumpup/fp";
 import winston from 'winston';
 import symbols from 'log-symbols';
 
