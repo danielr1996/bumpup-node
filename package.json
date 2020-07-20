@@ -29,6 +29,7 @@
     "typescript": "^3.9.5"
   },
   "dependencies": {
-    "concurrently": "^5.2.0"
+    "concurrently": "^5.2.0",
+    "log-symbols": "^4.0.0"
   }
 }

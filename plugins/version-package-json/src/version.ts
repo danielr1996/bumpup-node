@@ -1,18 +1,18 @@
 import * as fs from 'fs';
-import {emoji, flow, trace} from "@bumpup/fp";
+import {flow, trace} from "@bumpup/fp";
 import {BumpupData, BumpupPlugin} from "@bumpup/lib";
 import winston from 'winston';
 import symbols from 'log-symbols';
 
-const readPackageJson = (): string => fs.readFileSync('package.json', {encoding: 'utf8', flag: 'r'});
+export const readPackageJson = (): string => fs.readFileSync('package.json', {encoding: 'utf8', flag: 'r'});
 
-const parsePackageJson = packageJson => JSON.parse(packageJson);
+export const parsePackageJson: (packageJson: string) => { version: string } = packageJson => JSON.parse(packageJson);
 
-const extractVersion = packageJson => ({version: packageJson.version});
-const log = (logLevel: string) => trace((data: BumpupData) => {
+export const extractVersion: (packageJson: { version: string }) => { version: string } = packageJson => ({version: packageJson.version});
+export const log: (logLevel: string) => (u: unknown) => unknown = logLevel => trace((data: BumpupData) => {
     const logger = winston.createLogger({
         level: logLevel,
-        format: winston.format.printf(({message})=>message),
+        format: winston.format.printf(({message}) => message),
         transports: [new winston.transports.Console()]
     })
     logger.info(`${symbols.info} current version is ${data.version}`)

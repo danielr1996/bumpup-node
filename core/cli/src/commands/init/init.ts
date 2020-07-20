@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const defaultConfig =
+export const defaultConfig =
     `import version from '@bumpup/version-package-json';
 import {type, record} from '@bumpup/type-git';
 import bump from '@bumpup/bump-package-json';
@@ -18,10 +18,10 @@ export default {
     ]
 }`
 
-type Options = {
-    config: string
+type InitOptions = {
+    file: string
 }
 
-export const init: (options: Options) => void = async ({config}) => {
-    return await fs.promises.writeFile(path.resolve(process.cwd(), config), defaultConfig, 'utf-8');
+export const init: (options: InitOptions) => void = async ({file}) => {
+    return await fs.promises.writeFile(path.resolve(process.cwd(), file), defaultConfig, 'utf-8');
 }
