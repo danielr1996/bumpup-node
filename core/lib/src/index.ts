@@ -1,1 +1,1 @@
-export {bumpup, BumpupData, BumpupPlugin, ConfiguredBumpupPlugin} from './lib';
+export {bumpup, BumpupData, BumpupPlugin, ConfiguredBumpupPlugin, BumpupPluginOptions} from './lib';

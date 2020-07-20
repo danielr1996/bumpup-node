@@ -33,7 +33,6 @@
     "version": "node ../../core/cli/dist/index.js"
   },
   "devDependencies": {
-    "@bumpup/fp": "file:../../core/fp",
     "@bumpup/lib": "file:../../core/lib",
     "@rollup/plugin-node-resolve": "^8.0.1",
     "@types/jest": "^26.0.4",
@@ -45,5 +44,10 @@
     "ts-jest": "^26.1.1",
     "tslib": "^2.0.0",
     "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "@bumpup/fp": "file:../../core/fp",
+    "log-symbols": "^4.0.0",
+    "winston": "^3.3.3"
   }
 }

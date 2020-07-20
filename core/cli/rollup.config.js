@@ -1,7 +1,7 @@
 import typescript from 'rollup-plugin-typescript2';
 import shebang from 'rollup-plugin-add-shebang';
-import resolve from '@rollup/plugin-node-resolve';
 import clean from 'rollup-plugin-clean';
+import json from '@rollup/plugin-json';
 
 export default {
     input: 'src/index.ts',
@@ -13,11 +13,13 @@ export default {
         },
     ],
     plugins: [
-        resolve(),
         clean(),
+        json({
+            compact: true
+        }),
         typescript({clean: true}),
         shebang({include: 'dist/index.js'}),
     ],
-    external: ['fs','process','path']
+    external: ['fs', 'process', 'path', 'commander','@bumpup/lib', 'log-symbols','winston']
 };
 

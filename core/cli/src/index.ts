@@ -1,3 +1,3 @@
-import {cli} from './cli/cli';
+import {program} from './cli/cli';
 
-cli();
+program(process.argv).then();

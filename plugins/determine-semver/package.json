@@ -33,7 +33,6 @@
     "version": "node ../../core/cli/dist/index.js"
   },
   "devDependencies": {
-    "@bumpup/fp": "file:../../core/fp",
     "@bumpup/lib": "file:../../core/lib",
     "@rollup/plugin-node-resolve": "^8.0.1",
     "@types/jest": "^26.0.0",
@@ -41,7 +40,6 @@
     "@types/ramda": "^0.27.6",
     "@types/semver": "^7.2.0",
     "jest": "^26.0.1",
-    "ramda": "^0.27.0",
     "rollup": "^2.16.0",
     "rollup-plugin-clean": "^1.0.0",
     "rollup-plugin-typescript2": "^0.27.1",
@@ -49,5 +47,11 @@
     "ts-jest": "^26.1.0",
     "tslib": "^2.0.0",
     "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "@bumpup/fp": "file:../../core/fp",
+    "log-symbols": "^4.0.0",
+    "ramda": "^0.27.0",
+    "winston": "^3.3.3"
   }
 }
