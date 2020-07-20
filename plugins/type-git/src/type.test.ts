@@ -235,7 +235,7 @@ chore(release): release version 1.0.1++COMMIT_SEPERATOR++
 `
             const clo: () => string = () => raw;
             const data = {version: '1.0.1'};
-            expect(stepWithCommandLineOutput(clo)(data)).toEqual({version: '1.0.1', type: 'patch'})
+            expect(stepWithCommandLineOutput({logLevel: 'info'})(clo)(data)).toEqual({version: '1.0.1', type: 'patch'})
         })
     })
     describe('combine', () => {

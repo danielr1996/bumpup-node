@@ -1,7 +1,8 @@
 import * as child_process from "child_process";
 import {emoji, flow, match, trace} from "@bumpup/fp";
-import {BumpupData} from "@bumpup/lib";
-import {BumpupPlugin} from "@bumpup/lib/src";
+import {BumpupData, BumpupPlugin} from "@bumpup/lib";
+import winston from 'winston';
+import symbols from 'log-symbols';
 
 const COMMIT_SEPERATOR = `++COMMIT_SEPERATOR++`
 export const GIT_COMMAND = `git log --pretty=format:%B${COMMIT_SEPERATOR} .`;
@@ -72,9 +73,9 @@ export const determineHighestCommitType = (types: CommitType[]): CommitType => t
     {test: true, value: acc},
 ]), 'none');
 
-export const combine =(data: BumpupData) =>(type: string): BumpupData=>({...data,type})
+export const combine = (data: BumpupData) => (type: string): BumpupData => ({...data, type})
 
-export const stepWithCommandLineOutput = (clo: ()=>string) =>(data: BumpupData): BumpupData => flow(
+export const stepWithCommandLineOutput = (options: { logLevel: string, dry?: boolean })=>(clo: () => string) => (data: BumpupData): BumpupData => flow(
     clo,
     parseCommandLineOutput,
     parseCommitMessages,
@@ -82,11 +83,18 @@ export const stepWithCommandLineOutput = (clo: ()=>string) =>(data: BumpupData):
     getCommitTypes,
     determineHighestCommitType,
     combine(data),
-    trace((data: BumpupData) => console.log(`${emoji`🅱`} change type is ${data.type}`))
+    (()=>{
+        const logger = winston.createLogger({
+            level: options.logLevel,
+            format: winston.format.printf(({message}) => message),
+            transports: [new winston.transports.Console()]
+        })
+        return trace((data: BumpupData) => logger.info(`${symbols.info} change type is ${data.type}`))
+    })()
 )(data);
-export const step: BumpupPlugin = ()=> stepWithCommandLineOutput(getCommandLineOutput);
+export const step: BumpupPlugin = (options: { logLevel: string, dry?: boolean }) => stepWithCommandLineOutput(options)(getCommandLineOutput);
 export type Commiter = (message: string) => void;
-export const commiterWithChildProcess = (cp: { execSync: (string) => Buffer })=> (message: string): void => {
+export const commiterWithChildProcess = (cp: { execSync: (string) => Buffer }) => (message: string): void => {
     try {
         cp.execSync(message)
     } catch (e) {
@@ -95,15 +103,22 @@ export const commiterWithChildProcess = (cp: { execSync: (string) => Buffer })=>
 }
 export const commiter = commiterWithChildProcess(child_process);
 
-export const recordWithCommiter = (commiter: Commiter, options:{ dry?: boolean }) => (data: BumpupData): BumpupData => {
-    if(!options.dry){
-        if (data.newVersion !== data.version) {
+export const recordWithCommiter = (commiter: Commiter, options: { logLevel: string, dry?: boolean }) => (data: BumpupData): BumpupData => {
+    const logger = winston.createLogger({
+        level: options.logLevel,
+        format: winston.format.printf(({message}) => message),
+        transports: [new winston.transports.Console()]
+    })
+    if (data.newVersion !== data.version) {
+        if(!options.dry){
             commiter(`git add . && git commit -sm "${GIT_COMMIT_MESSAGE(data.newVersion)}"`);
+
+        }else{
+            logger.warn(`${symbols.warning} Not Recording because the 'dry' option was specified`)
         }
     }else{
-        console.log('Not Recording because the \'dry\' option was specified')
+        logger.info(`${symbols.info} not recording version in git`)
     }
-    console.log(`${emoji`📌`} ${data.newVersion !== data.version ? `` : `not `}recording version in git`)
     return data;
 }
-export const record: (options: { dry?: boolean }) => (BumpupData) => BumpupData = options=> recordWithCommiter(commiter, options);
+export const record: (options: { logLevel: string, dry?: boolean }) => (BumpupData) => BumpupData = options => recordWithCommiter(commiter, options);

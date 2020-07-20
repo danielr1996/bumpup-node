@@ -3,7 +3,8 @@
     "declaration": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true
   },
   "exclude" : ["src/**/*.test.ts"]
 }

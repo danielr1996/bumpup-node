@@ -3,32 +3,54 @@
 
 This is the cli for bumpup
 
-## Usage
-### Installation
-To use bumpup install it in your project
+## Quickstart 
 ```shell script
 npm install @bumpup/cli --save-dev
+npm install @bumpup/version-package-json @bumpup/type-git @bumpup/determine-semver @bumpup/version-package-json --save-dev
+npx bumpup init
+npx bumpup
 ```
 
-Then install the plugins that you'd like to use for the lifecycle steps.
+## Usage
+To see all options and commands run `bumpup --help` or `bumpup <subcommands> help`
 
-You can use the official plugins under the `@bumpup` scope, or any other plugin complying to the plugin interface.
+### Options and commands
+#### bumpup bump
+> For convience the `bump` subcommand can be executed with just `bumpup` too.
 
 ```shell script
-npm install @bumpup/version-package-json @bumpup/type-git @bumpup/determine-semver @bumpup/package-json --save-dev
+$ npx bumpup bump --help
+Usage: bumpup bump [options]
+
+bumps up the version
+
+Options:
+  -d, --dry                 executes all plugins in dry mode, preventing potentially destructive operations (default: false)
+  -l, --log <log-level>     specifies the log level (error, warn, info, verbose, debug, silly) (default: "info")
+  -f, --file <config-file>  which config file to read (default: "bumpup.config.mjs")
+  -h, --help                display help for command
 ```
 
-### Configuration
-> 🗑 The old `bumpup.json` is no longer supported.
+#### bumpup init
 
-> Currently only `bumpup.config.mjs` is supported as configuration. 
-> In a future version more configuration sources are planned to be supported, being merged in the following order:
-> - sensible default (@bumpup/version-package-json, @bumpup/type-git, @bumpup/determine-semver, @bumpup/package-json)
-> - `~/.bumpup.config.mjs`
-> - `bumpup.config.mjs` (searching up to the filesystem root until a `bumpup.config.mjs` is found, like package.json is found )
+```shell script
+$ npx bumpup init --help
+Usage: bumpup init [options]
+
+initializes a default config file
+
+Options:
+  -f, --file <config-file>  which config file to write (default: "bumpup.config.mjs")
+  -h, --help                display help for command
+```
+### Configuration
+A default `bumpup.config.mjs` config file can be generated with `bumpup init`. It contains the plugins for a standard
+'npm, git, semver' use case.
+
+> The config file can have whatever name you want but it has to end with *.mjs because otherwise node tries to import 
+> the config as a CommonJS Module.
 
 #### bumpup.config.mjs
-Put a `bumpup.config.mjs` in your project specifing the plugins to use in your project folder next to your `package.json`.
 
 ```js
 import version from '@bumpup/version-package-json';
@@ -46,13 +68,4 @@ export default {
         record,
     ]
 }
-```
-
-Run `bumpup` from the same directory where the `bumpup.json`. You should get an output similiar to
-```shell script
-📖 current version is 2.0.0
-🅱 change type is none
-🔎 no new version
-👊 not bumping version in package.json
-📌 not recording version in git
 ```

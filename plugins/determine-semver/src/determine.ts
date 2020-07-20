@@ -1,8 +1,9 @@
-import {pipe, prop} from "ramda";
-import {BumpupData} from "@bumpup/lib";
-import {BumpupPlugin} from "@bumpup/lib/src";
-import {emoji, trace} from "@bumpup/fp";
-
+import ramda from "ramda";
+import {BumpupData, BumpupPlugin} from "@bumpup/lib";
+import {trace} from "@bumpup/fp";
+import winston from 'winston';
+import symbols from 'log-symbols';
+const {pipe, prop} = ramda;
 const lift2 = f => g => h => x => f(g(x))(h(x));
 export const applyFnToObj = (fn: (obj: Record<string, unknown>) => unknown, key: string) => (obj: Record<string, unknown>): Record<string, unknown> => ({
     ...obj,
@@ -30,4 +31,11 @@ const increase = type => version => {
 export const join = (version: string[]): string => version.map(x => x.toString()).join('.');
 
 export const determine = lift2((type: string): (string) => string => pipe(split, increase(type), join),)(prop('type'))(prop('version'));
-export const step: BumpupPlugin = () => pipe(applyFnToObj(determine, 'newVersion'),trace((data: BumpupData) => console.log(`${emoji`🔎`} ${data.newVersion !== data.version ? `new version is ${data.newVersion}` : `no new version`}`)))
+export const step: BumpupPlugin = (options: {logLevel: string}) => pipe(applyFnToObj(determine, 'newVersion'),(()=>{
+    const logger = winston.createLogger({
+        level: options.logLevel,
+        format: winston.format.printf(({message}) => message),
+        transports: [new winston.transports.Console()]
+    })
+    return trace((data: BumpupData) => logger.info(`${symbols.info} ${data.newVersion !== data.version ? `new version is ${data.newVersion}` : `no new version`}`));
+})())

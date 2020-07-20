@@ -1,33 +1,49 @@
-import {bumpup, BumpupPlugin} from "@bumpup/lib";
-import {getConfig, BumpupPluginWithOptions} from "../config/config";
-import {BumpupPluginOptions, ConfiguredBumpupPlugin} from "@bumpup/lib/src/lib";
+import commander from 'commander';
+import {init} from "../commands/init/init";
+import {bump, LogLevel} from "../commands/bump/bump";
+import {version} from '../../package.json';
+import winston from 'winston';
 
-export const cli: () => void = async () => {
-    const config = await getConfig();
-    const cliOptions: BumpupPluginOptions = {
-        dry: process.argv.join(' ').includes('--dry')
-    };
-    const plugins: ConfiguredBumpupPlugin[] = config.plugins
-        .filter(isPlugin)
-        .map(plugin => {
-            if(isPluginWithoutOptions(plugin)){
-              return plugin(cliOptions) as ConfiguredBumpupPlugin
-            }else{
-                const [pluginWithOptions, options] = plugin;
-                return pluginWithOptions({...options, ...cliOptions}) as ConfiguredBumpupPlugin
-            }
-        });
-    bumpup(plugins);
+const logger = winston.createLogger({
+    format: winston.format.simple(),
+    transports: [
+        new winston.transports.Console()
+    ]
+})
+
+export const program: (argv) => Promise<unknown> = async argv => {
+    const program = new commander.Command();
+    program.passCommandToAction(false);
+
+
+    // Main Command
+    program
+        .version(version)
+        .name('bumpup')
+
+    program.command('bump', {isDefault: true})
+        .description('bumps up the version')
+        .option<boolean>('-d, --dry', `executes all plugins in dry mode, preventing potentially destructive operations`, parseDefault, false)
+        .option<LogLevel>('-l, --log <log-level>', `specifies the log level (error, warn, info, verbose, debug, silly)`, parseLogLevelOption, 'info')
+        .option<string>('-f, --file <config-file>', `which config file to read`, parseDefault, 'bumpup.config.mjs')
+        .action(bump)
+
+    program.command('init')
+        .option('-f, --file <config-file>', `which config file to write`, `bumpup.config.mjs`)
+        .description('initializes a default config file')
+        .action(init)
+
+    return program.parseAsync(argv);
 }
 
-function isPlugin(plugin: BumpupPlugin | BumpupPluginWithOptions) {
-    return isPluginWithOptions(plugin) || isPluginWithoutOptions(plugin);
+const parseEnumarableOption = (enumberable: unknown[]) => (value, prev) => {
+    if (enumberable.includes(value)) {
+        return value;
+    }
+    logger.warn(`loglevel "${value}" is invalid, instead the default "${prev}" will be used`)
+    return prev;
 }
 
-function isPluginWithoutOptions(plugin: BumpupPlugin | BumpupPluginWithOptions): plugin is BumpupPlugin {
-    return typeof plugin === 'function' && typeof plugin({}) === 'function';
-}
+const parseLogLevelOption = parseEnumarableOption(['error', 'warn', 'info', 'verbose', 'debug', 'silly']);
 
-function isPluginWithOptions(plugin: BumpupPlugin | BumpupPluginWithOptions): plugin is BumpupPluginWithOptions {
-    return plugin.length == 2 && plugin[0] as BumpupPlugin && typeof plugin[1] === 'object';
-}
+const parseDefault = (value, prev) => value;
