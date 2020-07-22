@@ -5,7 +5,7 @@ describe('@bumpup/cli', () => {
         describe('cli', () => {
             it('executes without errors', () => {
                 const subcommand = console.log;
-                expect(program(subcommand, subcommand)([])).resolves.toBeTruthy();
+                expect(program(subcommand, subcommand, ()=>'1')([])).resolves.toBeTruthy();
             })
             it('doesnt report caught errors', () => {
                 const subcommand = ()=>{
@@ -13,15 +13,15 @@ describe('@bumpup/cli', () => {
                     error['caught'] = true;
                     throw error;
                 };
-                expect(program(subcommand, subcommand)([])).resolves.toBeTruthy();
+                expect(program(subcommand, subcommand, ()=>'1')([])).resolves.toBeTruthy();
             })
             it('reports uncaught errors', () => {
                 const subcommand = ()=>{
                     throw new Error();
                 };
                 // program(subcommand, subcommand)([]).then(()=>console.log('success')).catch(()=>console.log('error'))
-                expect(program(subcommand, subcommand)([])).rejects.toBeTruthy();
-                expect(program(subcommand, subcommand)([])).resolves.toBeFalsy();
+                expect(program(subcommand, subcommand, ()=>'1')([])).rejects.toBeTruthy();
+                expect(program(subcommand, subcommand, ()=>'1')([])).resolves.toBeFalsy();
             })
         })
         describe('parseEnumberableOption', () => {

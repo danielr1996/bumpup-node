@@ -1,6 +1,6 @@
 import commander from 'commander';
-import {version} from '../../package.json';
 import winston from 'winston';
+import {version} from "../commands/version/version";
 
 const logger = winston.createLogger({
     format: winston.format.simple(),
@@ -9,14 +9,14 @@ const logger = winston.createLogger({
     ]
 })
 
-export const program: (bumpSubcommand, initSubcommand) => (argv) => Promise<unknown> = (bumpSubcommand, initSubcommand) => async argv => {
+export const program: (bumpSubcommand, initSubcommand, versionCommand) => (argv) => Promise<unknown> = (bumpSubcommand, initSubcommand, versionCommand) => async argv => {
     const program = new commander.Command();
     program.passCommandToAction(false);
 
 
     // Main Command
     program
-        .version(version)
+        .version(versionCommand)
         .name('bumpup')
 
     program.command('bump', {isDefault: true})
