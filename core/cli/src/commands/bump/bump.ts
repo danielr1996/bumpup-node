@@ -2,6 +2,7 @@ import {bumpup, BumpupPlugin, BumpupPluginOptions, ConfiguredBumpupPlugin} from 
 import path from "path";
 import winston from 'winston';
 import symbols from 'log-symbols';
+import findUp from 'find-up';
 
 export type BumpupPluginWithOptions = [BumpupPlugin, BumpupPluginOptions];
 
@@ -24,10 +25,20 @@ const logger = winston.createLogger({
 })
 
 export const findConfigFile: (filename: string) => string = filename => {
-    if(filename.endsWith('.mjs')){
-        return `file://${path.resolve(process.cwd(), filename)}`;
+    const found = findUp.sync(filename, {cwd: process.cwd()});
+
+    if (!findUp.sync.exists(found)) {
+        logger.error(`${symbols.error} could not find config file at ${filename}`);
+        const error = new Error('Config file not found')
+        error['caught'] = true;
+        throw error;
     }
-    return `${path.resolve(process.cwd(), filename)}`
+    logger.verbose(`${symbols.info} found config file at ${found}`);
+
+    if (found.endsWith('.mjs')) {
+        return `file://${path.resolve(process.cwd(), found)}`;
+    }
+    return `${path.resolve(process.cwd(), found)}`
 }
 
 export const validateConfig: (config: Config) => void = config => {
@@ -83,12 +94,12 @@ export function isPluginWithOptions(plugin: BumpupPlugin | BumpupPluginWithOptio
 
 export const bump: (options: BumpOptions) => Promise<string> = async ({dry, log, file}) => {
     logger.level = log;
-    const configfile = findConfigFile(file);
-    logger.verbose(`${symbols.info} found config file at ${configfile}`);
-    const config = await parse(configfile);
-    try{
+    let config;
+    try {
+        const configfile = findConfigFile(file);
+        config = await parse(configfile);
         validateConfig(config);
-    }catch (e) {
+    } catch (e) {
         return;
     }
     const cliOptions: BumpupPluginOptions = {

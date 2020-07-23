@@ -18,20 +18,33 @@ describe('@bumpup/cli', () => {
     describe('bump', () => {
         describe('findConfigFile', () => {
             it('finds the a .mjs config file', () => {
+                const configFileName = tempy.file({extension: 'mjs'});
+                const configFileDir = path.dirname(configFileName);
+                const baseName = path.basename(configFileName);
                 const cwd = process.cwd();
-                process.chdir(os.tmpdir())
-                const expected = `file://${os.tmpdir()}${path.sep}bumpup.config.mjs`;
-                const actual = findConfigFile('bumpup.config.mjs');
+                fs.writeFileSync(configFileName, '','utf-8');
+                process.chdir(configFileDir)
+
+                const expected = `file://${configFileName}`;
+                const actual = findConfigFile(baseName);
                 expect(actual).toBe(expected);
                 process.chdir(cwd);
             })
             it('finds the a .js config file', () => {
+                const configFileName = tempy.file({extension: 'js'});
+                const configFileDir = path.dirname(configFileName);
+                const baseName = path.basename(configFileName);
                 const cwd = process.cwd();
-                process.chdir(os.tmpdir())
-                const expected = `${os.tmpdir()}${path.sep}bumpup.config.js`;
-                const actual = findConfigFile('bumpup.config.js');
+                fs.writeFileSync(configFileName, '','utf-8');
+                process.chdir(configFileDir)
+
+                const expected = `${configFileName}`;
+                const actual = findConfigFile(baseName);
                 expect(actual).toBe(expected);
                 process.chdir(cwd);
+            })
+            it('throws for a not found file', () => {
+                expect(()=>findConfigFile('nonsense')).toThrow();
             })
         })
 

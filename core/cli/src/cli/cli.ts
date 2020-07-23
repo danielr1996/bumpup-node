@@ -1,6 +1,5 @@
 import commander from 'commander';
 import winston from 'winston';
-import {version} from "../commands/version/version";
 
 const logger = winston.createLogger({
     format: winston.format.simple(),
