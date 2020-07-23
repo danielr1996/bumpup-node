@@ -20,6 +20,6 @@ export default {
         typescript({clean: true}),
         shebang({include: 'dist/index.js'}),
     ],
-    external: ['fs', 'process', 'path', 'commander','@bumpup/lib', 'log-symbols','winston']
+    external: ['fs', 'process', 'path', 'commander','@bumpup/lib', 'log-symbols','winston', 'find-up']
 };
 
