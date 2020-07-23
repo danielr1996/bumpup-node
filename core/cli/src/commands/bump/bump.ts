@@ -56,6 +56,8 @@ export const parse: (filename: string) => Promise<Config> = async filename => {
     } catch (e) {
         if (e.code === 'ERR_MODULE_NOT_FOUND' || e.code === 'MODULE_NOT_FOUND') {
             logger.error(`${symbols.error} Could not find ${filename}`)
+            logger.debug(`${symbols.error} Full error description:`)
+            logger.debug(e)
             e['caught'] = true;
             throw e;
         }
