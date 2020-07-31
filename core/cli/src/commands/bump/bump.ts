@@ -16,6 +16,7 @@ type BumpOptions = {
     file: string,
     dry: boolean,
     log: LogLevel,
+    pre?: boolean
 }
 export const formatter: ({message: string}) => string = ({message}) => message;
 
@@ -94,7 +95,7 @@ export function isPluginWithOptions(plugin: BumpupPlugin | BumpupPluginWithOptio
     return plugin.length == 2 && plugin[0] as BumpupPlugin && typeof plugin[1] === 'object';
 }
 
-export const bump: (options: BumpOptions) => Promise<string> = async ({dry, log, file}) => {
+export const bump: (options: BumpOptions) => Promise<string> = async ({pre, dry, log, file}) => {
     logger.level = log;
     let config;
     try {
@@ -107,6 +108,7 @@ export const bump: (options: BumpOptions) => Promise<string> = async ({dry, log,
     const cliOptions: BumpupPluginOptions = {
         dry,
         logLevel: log,
+        pre: pre
     };
     const plugins = configurePlugins(config, cliOptions);
 

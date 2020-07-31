@@ -1,1 +1,1 @@
-export {step as default} from './determine';
+export {determine as default} from './determine';
