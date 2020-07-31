@@ -1,41 +1,22 @@
-import ramda from "ramda";
-import {BumpupData, BumpupPlugin} from "@bumpup/lib";
-import {trace} from "@bumpup/fp";
+import {BumpupData} from "@bumpup/lib";
 import winston from 'winston';
 import symbols from 'log-symbols';
-const {pipe, prop} = ramda;
-const lift2 = f => g => h => x => f(g(x))(h(x));
-export const applyFnToObj = (fn: (obj: Record<string, unknown>) => unknown, key: string) => (obj: Record<string, unknown>): Record<string, unknown> => ({
-    ...obj,
-    [key]: fn(obj)
-})
+import semver, {ReleaseType} from 'semver';
 
-const split = version => version.split('.').map(x => parseInt(x))
-
-const increase = type => version => {
-    if (type === 'patch') {
-        version[2]++;
-    }
-    if (type === 'minor') {
-        version[2] = 0;
-        version[1]++;
-    }
-    if (type === 'major') {
-        version[2] = 0;
-        version[1] = 0;
-        version[0]++;
-    }
-    return version;
-}
-
-export const join = (version: string[]): string => version.map(x => x.toString()).join('.');
-
-export const determine = lift2((type: string): (string) => string => pipe(split, increase(type), join),)(prop('type'))(prop('version'));
-export const step: BumpupPlugin = (options: {logLevel: string}) => pipe(applyFnToObj(determine, 'newVersion'),(()=>{
+export const determine: (options: { dry?: boolean, pre?: boolean, logLevel: string }) => (data: BumpupData) => BumpupData = options => data => {
     const logger = winston.createLogger({
         level: options.logLevel,
         format: winston.format.printf(({message}) => message),
         transports: [new winston.transports.Console()]
     })
-    return trace((data: BumpupData) => logger.info(`${symbols.info} ${data.newVersion !== data.version ? `new version is ${data.newVersion}` : `no new version`}`));
-})())
+    let returnData;
+    if (data.type === 'none') {
+        returnData = {...data, newVersion: data.version};
+    } else {
+        const releaseIdentifier = options.pre ? `pre${data.type}` : data.type;
+        returnData = {...data, newVersion: semver.inc(data.version, releaseIdentifier as ReleaseType)};
+    }
+    logger.info(`${symbols.info} ${returnData.newVersion !== returnData.version ? `new version is ${returnData.newVersion}` : `no new version`}`)
+
+    return returnData;
+};

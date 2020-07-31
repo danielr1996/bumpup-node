@@ -19,14 +19,16 @@ To see all options and commands run `bumpup --help` or `bumpup <subcommands> hel
 > For convience the `bump` subcommand can be executed with just `bumpup` too.
 
 ```shell script
-$ npx bumpup bump --help
+$ bumpup bump --help
 Usage: bumpup bump [options]
 
 bumps up the version
 
 Options:
   -d, --dry                 executes all plugins in dry mode, preventing potentially destructive operations (default: false)
+  -p, --pre                 do a prerelease (default: false)
   -l, --log <log-level>     specifies the log level (error, warn, info, verbose, debug, silly) (default: "info")
+  -f, --file <config-file>  which config file to read (default: "bumpup.config.mjs")
   -h, --help                display help for command
 ```
 
