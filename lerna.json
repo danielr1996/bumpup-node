@@ -1,0 +1,7 @@
+{
+  "packages": [
+    "core/*",
+    "plugins/*"
+  ],
+  "version": "independant"
+}

@@ -30,17 +30,12 @@ jobs:
           # Need to set a valid env, otherwise npm complains with "Failed to replace env in config: ${NPM_TOKEN}"
           NPM_TOKEN: DUMMY
         run: |
-          npx gulp ci
-      - name: Lint
-        env:
-          NPM_TOKEN: DUMMY
-        run: |
-          npx gulp lint
+          npx lerna exec --stream -- npm ci
       - name: Build
         env:
           NPM_TOKEN: DUMMY
         run: |
-          npx gulp build
+          npx lerna run --stream build
       - name: Checksum
         env:
           NPM_TOKEN: DUMMY
@@ -52,8 +47,8 @@ jobs:
         env:
           NPM_TOKEN: DUMMY
         run: |
-          npx gulp test
-      - name: Coverage
+          npx jest --silent --colors
+      - name: Upload Coverage
         env:
           CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
         run: |
@@ -62,7 +57,7 @@ jobs:
         env:
           NPM_TOKEN: DUMMY
         run: |
-          npx gulp version
+          npx lerna run version
       - name: Push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -73,4 +68,4 @@ jobs:
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
         run: |
-          npx gulp publish
+          lerna exec -- "npm publish --access=public & exit 0"

@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: ['14.x', '13.x', '12.x']
+        node-version: ['14.x']
     steps:
       - uses: actions/checkout@v2
         with:
@@ -22,29 +22,47 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{matrix.node-version}}
+      - name: Prepare
+        run: |
+          git config --global user.email "danielrichter@posteo.de"
+          git config --global user.name "Github Actions"
+          npm ci
+      - name: Install
+        env:
+          # Need to set a valid env, otherwise npm complains with "Failed to replace env in config: ${NPM_TOKEN}"
+          NPM_TOKEN: DUMMY
+        run: |
+          npx lerna exec --stream -- npm ci
       - name: Build
         env:
           # Need to set a valid env, otherwise npm complains with "Failed to replace env in config: ${NPM_TOKEN}"
           NPM_TOKEN: DUMMY
         run: |
-          npm ci
-          node -v
-          npx gulp ci
-          npx gulp build
-      - name: Test
+          npx lerna run --stream build
+      - name: Checksum
         env:
           NPM_TOKEN: DUMMY
+        run: |
+          npx gulp checksum
+          git add .
+          git commit -asm "fix: recompile with new dependencies" & exit 0;
+      - name: Test
+        run: |
+          npx jest --silent --colors
+      - name: Upload Coverage
+        env:
           CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
         run: |
-          npx gulp test
           bash <(curl -s https://codecov.io/bash)
       - name: Version
         env:
+          # Need to set a valid env, otherwise npm complains with "Failed to replace env in config: ${NPM_TOKEN}"
           NPM_TOKEN: DUMMY
         run: |
-          npx gulp version:dry
-      - name: Lint
+          npx lerna run version -- --pre --dry
+      - name: Push
         env:
-          NPM_TOKEN: DUMMY
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npx gulp lint
+          remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/danielr1996/bumpup.git"
+          git push "${remote_repo}" ${GITHUB_REF#"refs/heads/"} --follow-tags
