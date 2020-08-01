@@ -59,10 +59,15 @@ jobs:
           # Need to set a valid env, otherwise npm complains with "Failed to replace env in config: ${NPM_TOKEN}"
           NPM_TOKEN: DUMMY
         run: |
-          npx lerna run version -- --pre --dry
+          npx lerna run version -- -- --pre
       - name: Push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/danielr1996/bumpup.git"
           git push "${remote_repo}" ${GITHUB_REF#"refs/heads/"} --follow-tags
+      - name: Publish
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+        run: |
+          npx lerna exec -- "npm publish --access=public & exit 0"
