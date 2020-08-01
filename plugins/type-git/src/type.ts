@@ -53,7 +53,6 @@ export const filterToLastVersion = (data: BumpupData) => (messages: CommitMessag
     return filtered;
 };
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 export const getCommitType = (message: CommitMessage): CommitType => match([
     {test: message.notes?.map(note => note.title).includes('BREAKING CHANGE'), value: 'major'},
     {test: message.type === 'fix', value: 'patch'},
@@ -62,8 +61,7 @@ export const getCommitType = (message: CommitMessage): CommitType => match([
 ]);
 
 export const getCommitTypes = (messages: CommitMessage[]): CommitType[] => messages.map(getCommitType)
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+
 export const determineHighestCommitType = (types: CommitType[]): CommitType => types.reduce((acc, cur) => match([
     {test: acc === 'none', value: cur},
     {test: acc === 'patch' && cur !== 'none', value: cur},
