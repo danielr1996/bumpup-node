@@ -24,13 +24,13 @@ jobs:
         run: |
           git config --global user.email "danielrichter@posteo.de"
           git config --global user.name "Github Actions"
-          npm ci
+          npm install
       - name: Install
         env:
           # Need to set a valid env, otherwise npm complains with "Failed to replace env in config: ${NPM_TOKEN}"
           NPM_TOKEN: DUMMY
         run: |
-          npx gulp ci
+          npx gulp install
       - name: Lint
         env:
           NPM_TOKEN: DUMMY

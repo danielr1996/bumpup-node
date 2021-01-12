@@ -22,6 +22,6 @@ export default {
         shebang({include: 'dist/index.js'}),
         nodeResolve(),
     ],
-    external: ['fs', 'process', 'path', 'commander', 'log-symbols','winston', 'find-up']
+    external: ['fs', 'process', 'path','winston','log-symbols','find-up','commander']
 };
 

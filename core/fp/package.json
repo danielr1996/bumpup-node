@@ -36,10 +36,10 @@
     "@types/jest": "^26.0.0",
     "jest": "^26.0.1",
     "rollup": "^2.16.0",
+    "rollup-plugin-clean": "^1.0.0",
     "rollup-plugin-typescript2": "^0.27.1",
     "ts-jest": "^26.1.0",
     "tslib": "^2.0.0",
-    "typescript": "^3.9.5",
-    "rollup-plugin-clean": "^1.0.0"
+    "typescript": "^3.9.5"
   }
 }
