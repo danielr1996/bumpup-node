@@ -1,6 +1,6 @@
 {
   "name": "@bumpup/fp",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "fully automated and extensible software versioning",
   "keywords": [
     "configurable",
