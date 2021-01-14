@@ -1,6 +1,6 @@
 {
   "name": "@bumpup/type-git-tags",
-  "version": "1.2.1",
+  "version": "1.2.2-0",
   "description": "fully automated and extensible software versioning",
   "keywords": [
     "configurable",
