@@ -43,7 +43,6 @@
     "rollup": "^2.16.0",
     "rollup-plugin-clean": "^1.0.0",
     "rollup-plugin-typescript2": "^0.27.1",
-    "semver": "^7.3.2",
     "ts-jest": "^26.1.0",
     "tslib": "^2.0.0",
     "typescript": "^3.9.5"
@@ -52,6 +51,7 @@
     "@bumpup/fp": "file:../../core/fp",
     "log-symbols": "^4.0.0",
     "ramda": "^0.27.0",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "semver": "^7.3.2"
   }
 }

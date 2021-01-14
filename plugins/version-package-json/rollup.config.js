@@ -1,5 +1,6 @@
 import typescript from 'rollup-plugin-typescript2';
 import clean from 'rollup-plugin-clean';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 export default {
     input: 'src/index.ts',
@@ -12,6 +13,7 @@ export default {
     plugins: [
         typescript({clean: true}),
         clean(),
+        nodeResolve(),
     ],
-    external: ["fs", "@bumpup/fp", "winston", "log-symbols"]
+    external: ["fs", "winston", "log-symbols"]
 };
