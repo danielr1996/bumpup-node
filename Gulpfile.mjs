@@ -53,6 +53,10 @@ const version = () => packagedirs.forEach(doInDir(dir => {
     console.log(child_process.execSync('npm run version').toString());
 }));
 
+const prerelease = () => packagedirs.forEach(doInDir(dir => {
+    console.log(child_process.execSync('npm run version -- -p').toString());
+}));
+
 const versionDry = () => packagedirs.forEach(doInDir(dir => {
     console.log(child_process.execSync('npm run version -- --dry').toString());
 }));
@@ -67,5 +71,6 @@ gulp.task('test', task(test));
 gulp.task('build', task(build));
 gulp.task('checksum', task(checksum))
 gulp.task('version', task(version));
+gulp.task('prerelease', task(prerelease));
 gulp.task('version:dry', task(versionDry));
 gulp.task('publish', task(publish));
