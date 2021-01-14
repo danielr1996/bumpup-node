@@ -48,16 +48,16 @@ jobs:
           npx gulp checksum
           git add .
           git commit -asm "fix: recompile with new dependencies" & exit 0;
-      - name: Test
-        env:
-          NPM_TOKEN: DUMMY
-        run: |
-          npx gulp test
-      - name: Coverage
-        env:
-          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
-        run: |
-          bash <(curl -s https://codecov.io/bash)
+#      - name: Test
+#        env:
+#          NPM_TOKEN: DUMMY
+#        run: |
+#          npx gulp test
+#      - name: Coverage
+#        env:
+#          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+#        run: |
+#          bash <(curl -s https://codecov.io/bash)
       - name: Version
         env:
           NPM_TOKEN: DUMMY
