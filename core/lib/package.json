@@ -1,6 +1,6 @@
 {
   "name": "@bumpup/lib",
-  "version": "2.1.4",
+  "version": "2.1.5-0",
   "description": "fully automated and extensible software versioning",
   "keywords": [
     "configurable",
