@@ -1,6 +1,6 @@
 {
   "name": "@bumpup/bump-package-json",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "description": "fully automated and extensible software versioning",
   "keywords": [
     "configurable",
