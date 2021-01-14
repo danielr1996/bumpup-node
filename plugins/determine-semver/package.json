@@ -1,6 +1,6 @@
 {
   "name": "@bumpup/determine-semver",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "description": "fully automated and extensible software versioning",
   "keywords": [
     "configurable",
