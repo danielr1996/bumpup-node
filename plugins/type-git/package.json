@@ -1,6 +1,6 @@
 {
   "name": "@bumpup/type-git",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "fully automated and extensible software versioning",
   "keywords": [
     "configurable",
