@@ -35,7 +35,7 @@ export const bumpWithEffects = (fs: FileSystem, options: { logLevel: string, dry
             logger.warn(`${symbols.warning} Not Bumping because the 'dry' option was specified`)
         }
     }
-    logger.info(`${symbols.info} ${data.newVersion !== data.version  && data.newVersion !== null ? `` : `not `}bumping version in package.json`)
+    logger.info(`${symbols.info} ${(data.newVersion !== data.version  && data.newVersion !== null) || data.type==='new' ? `` : `not `}bumping version in package.json`)
     return data;
 }
 
