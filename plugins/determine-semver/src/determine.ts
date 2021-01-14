@@ -3,7 +3,7 @@ import winston from 'winston';
 import symbols from 'log-symbols';
 import semver, {ReleaseType} from 'semver';
 
-export const determine: (options: { dry?: boolean, pre?: boolean, logLevel: string }) => (data: BumpupData) => BumpupData = options => data => {
+export const determine: (options: {preid?: string, dry?: boolean, pre?: boolean, logLevel: string }) => (data: BumpupData) => BumpupData = options => data => {
     const logger = winston.createLogger({
         level: options.logLevel,
         format: winston.format.printf(({message}) => message),
@@ -14,7 +14,7 @@ export const determine: (options: { dry?: boolean, pre?: boolean, logLevel: stri
         returnData = {...data, newVersion: data.version};
     } else {
         const releaseIdentifier = options.pre ? `pre${data.type}` : data.type;
-        returnData = {...data, newVersion: semver.inc(data.version, releaseIdentifier as ReleaseType)};
+        returnData = {...data, newVersion: semver.inc(data.version, releaseIdentifier as ReleaseType,options.preid)};
     }
     logger.info(`${symbols.info} ${returnData.newVersion !== returnData.version ? `new version is ${returnData.newVersion}` : `no new version`}`)
 
