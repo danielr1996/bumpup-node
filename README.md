@@ -13,10 +13,6 @@
 > 🚧 This is still a work in progress. While the core library already works well, not all use cases may already
 > supported.
 
-> 💥 The configuration file format has changed from `bumpup.json` to `bumpup.config.mjs`.
->
-> See [@bumpup/cli](core/cli/README.md) for details on the configuration.
-
 > 📦 If you just want to see how to use `bumpup` head straight to [@bumpup/cli](core/cli/README.md)
 
 > ⚠ Only Node Version with ESM support are supported by `bumpup`, this means:
@@ -63,7 +59,7 @@ the result to the next plugin. What a plugin does with that data is completely u
 The standard workflow for a npm package would use the following plugins:
 
 1. `@bumpup/version-package-json` reads the version from `package.json`
-2. `@bumpup/type-git` determines the change type by looking at the git history using [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)
+2. `@bumpup/type-git-tags` determines the change type by looking at the git history using [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)
 3. `@bumpup/determine-semver` determines the next version according to [semver](https://semver.org/)
 4. `@bumpup/bump-package-json` updates the version in the `package.json`
 

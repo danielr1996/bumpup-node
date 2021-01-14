@@ -28,6 +28,9 @@ export const program: (bumpSubcommand, initSubcommand, versionCommand) => (argv)
 
     program.command('init')
         .option('-f, --file <config-file>', `which config file to write`, `bumpup.config.mjs`)
+        .option('-d, --dry', `executes all plugins in dry mode, preventing potentially destructive operations`, false)
+        .option('-P, --save-prod', 'packages will appear in your `dependencies`', false)
+        .option('-s, --skip-install', 'skip install of packages', false)
         .description('initializes a default config file')
         .action(initSubcommand)
     return program.parseAsync(argv);
