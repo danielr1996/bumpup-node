@@ -1,3 +1,5 @@
+> 🚧 bumpup has migrated from node to deno
+
 # 📦🏷bumpup
 **fully automated and extensible software versioning**
 
